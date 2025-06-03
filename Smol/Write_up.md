@@ -10,12 +10,8 @@ Markdown
 
 - [1. Reconnaissance and Initial Enumeration](#1-reconnaissance-and-initial-enumeration)
 - [2. WordPress Vulnerabilities and Initial Access](#2-wordpress-vulnerabilities-and-initial-access)
-  - [jsmol2wp Plugin Vulnerabilities](#jsmol2wp-plugin-vulnerabilities)
   - [XSS Vulnerability (Example Payload)](#xss-vulnerability-example-payload)
   - [SSRF Vulnerability (Target Payload)](#ssrf-vulnerability-target-payload)
-  - [Exploiting SSRF to Obtain Database Credentials](#exploiting-ssrf-to-obtain-database-credentials)
-  - [WordPress Administrator Login](#wordpress-administrator-login)
-  - [Discovering and Decoding the Backdoor](#discovering-and-decoding-the-backdoor)
 - [3. Gaining a Reverse Shell](#3-gaining-a-reverse-shell)
   - [Crafting and Executing the Reverse Shell Payload](#crafting-and-executing-the-reverse-shell-payload)
   - [Setting up the Netcat Listener](#setting-up-the-netcat-listener)
