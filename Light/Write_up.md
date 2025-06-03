@@ -1,60 +1,63 @@
-Markdown
-
-# Exploiting Light Database - SQL Injection Walkthrough
+## Exploiting Light Database - SQL Injection Walkthrough
 
 This repository details the process of exploiting a "Light database" application through SQL injection, ultimately leading to the retrieval of administrator credentials and the flag.
 
-## Initial Access and Reconnaissance
+Note: For the images to display correctly on GitHub, please ensure that all image files (password_for_smokey.png, error.png, interesting_error.png, sql_discovery.png, db_dump.png, flag.png) are located in the same directory as this README.md file in your GitHub repository.
+## 1. Initial Access and Reconnaissance
 
-The target is a network service listening on port 1337, which presents a "Light database" login prompt.
+We began by connecting to the target service, which was listening on port 1337. This service presented a "Light database" login prompt.
 
-First, we establish a connection using `netcat`:
+To establish a connection, we used netcat:
 
-```bash
 nc 10.10.50.126 1337
 
-Upon connection, we are greeted by the login screen. We're provided with a username "smokey" and a password "vYQ5ngPpw8AdUmL".
-SQL Injection Discovery
+Upon successful connection, we were greeted by the login screen. We were provided with an initial username "smokey" and its corresponding password "vYQ5ngPpw8AdUmL".
+## 2. SQL Injection Discovery
 
-We suspect the application is vulnerable to SQL injection. A common first step is to try injecting a single quote (') into the username field to see if it causes an error.
+Our first step in identifying potential vulnerabilities was to test for SQL injection. A common technique is to inject a single quote (') into the username field to observe the application's response.
 
-As expected, inserting a single quote results in an Error: unrecognized token: " LIMIT 30". This error message confirms the presence of SQL injection vulnerability and gives us a hint about the original query structure (likely including a LIMIT 30 clause).
-Bypassing Restrictions - Commenting
+When we entered ' as the username, the application returned an error:
 
-Our next step is to try a UNION SELECT statement. However, common SQL injection techniques often involve commenting out the rest of the original query using -- or /* ... */.
+The error message Error: unrecognized token: " LIMIT 30" confirmed that the application was indeed vulnerable to SQL injection. Furthermore, the error provided a valuable hint about the structure of the underlying SQL query, indicating the presence of a LIMIT 30 clause.
+## 3. Bypassing Restrictions - Commenting
 
-When we attempt to use -- to comment out the trailing part of the query (e.g., ' UNION SELECT 1 --), we encounter an interesting error message:
+With the SQL injection vulnerability confirmed, our next attempt involved using a UNION SELECT statement. Typically, the remainder of the original query is commented out using -- or /* ... */.
 
-The application explicitly states that "any input containing /* -- or, %0b is not allowed". This indicates a simple filter in place, preventing common SQL comment syntaxes. This means we'll have to end our injected query with a single quote to properly terminate the original query without relying on comments.
-Identifying the Database Management System (DBMS)
+However, when we tried to use -- (e.g., ' UNION SELECT 1 -- ) to comment out the trailing part of the query, we encountered an interesting restriction:
 
-Since we know it's a database application and SQL injection is possible, identifying the specific DBMS can help us craft more effective payloads. We can try common functions to determine this. For SQLite, sqlite_version() is a good candidate.
-SQL
+The application explicitly stated: "For strange reasons I can't explain, any input containing /*, --, or %0b is not allowed :)". This indicated a simple filter preventing common SQL comment syntaxes. To bypass this, we realized we would need to properly terminate our injected query with a single quote (') to close the original query, rather than relying on comments.
+## 4. Identifying the Database Management System (DBMS)
+
+To craft more precise payloads, it was crucial to identify the specific DBMS in use. For SQLite databases, the sqlite_version() function is commonly used to retrieve its version.
+
+We injected the following payload into the username field:
 
 ' Union Select sqlite_version()'
 
-By injecting this into the username field, we successfully retrieve the SQLite version:
+This injection successfully returned the SQLite version:
 
-This confirms that the database is SQLite version 3.31.1.
-Extracting Database Schema
+The output 3.31.1 confirmed that the database was SQLite.
+## 5. Extracting Database Schema
 
-Knowing it's SQLite, we can now leverage SQLite-specific queries to extract the database schema. The sqlite_master table contains information about all tables and indexes in the database. We can use group_concat(sql) to get the CREATE TABLE statements for all tables.
-SQL
+Knowing that the DBMS was SQLite, we could now leverage SQLite-specific features to extract the database schema. The sqlite_master table in SQLite contains metadata about all tables, indexes, views, and triggers. We used the group_concat(sql) function to retrieve the CREATE TABLE statements for all tables, which reveals their structure.
+
+The payload used was:
 
 ' Union Select group_concat(sql) FROM sqlite_master'
 
-Injecting this payload reveals the database structure:
+Injecting this into the username field revealed the full database structure:
 
-From the output, we can see two tables: usertable and admintable. Both have id, username, and password columns. Our goal is to find the credentials for an admin user, which are likely stored in the admintable.
-Retrieving Admin Credentials and Flag
+The output showed two tables: usertable and admintable. Both tables contained id, username, and password columns. Our objective was to find the credentials for the admin user, which were clearly located in the admintable.
+## 6. Retrieving Admin Credentials and Flag
 
-Finally, to get the admin credentials and the flag, we can dump the username and password from the admintable. We'll concatenate the username and password with a colon for better readability.
-SQL
+The final step was to dump the username and password fields from the admintable. To make the output clear, we concatenated the username and password with a colon (:) using the || operator (SQLite's string concatenation operator) and group_concat to display all entries if there were multiple.
+
+The payload for this step was:
 
 ' Union Select group_concat(username || ":" || password) FROM admintable '
 
-Executing this payload yields the administrator's username, password, and the flag:
+Upon executing this payload, we successfully retrieved the administrator's username, password, and the flag:
 
-The output provides: TryhackmeAdmin:mamZtAUhRseEy5bp6qJ7, flag:THM{SQliT3_InJ3cti0n_iS_SiMpLE_nO?}
+The output provided the following critical information: TryhackmeAdmin:mamZtAUhRseEy5bp6qJ7, flag:THM{SQliT3_InJ3cti0n_is_Simple_no?}
 
-This completes the SQL injection attack, successfully retrieving the administrator credentials and the flag.
+This concluded the SQL injection attack, allowing us to successfully retrieve the administrator credentials and the hidden flag.
