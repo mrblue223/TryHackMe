@@ -1,4 +1,4 @@
-![Alt text for the image](618b3fa52f0acc0061fb0172-1720456743344.png)
+<img src="618b3fa52f0acc0061fb0172-1720456743344.png" alt="Screenshot of the application" title="Application Screenshot" width="500">
 
 ## TryHackMe Crypto Failures Exploitation
 
