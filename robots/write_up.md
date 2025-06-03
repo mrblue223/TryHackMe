@@ -1,3 +1,5 @@
+![Alt text for the image](robot.png)
+
 # TryHackMe "Robots" Machine Compromise Write-up
 
 
