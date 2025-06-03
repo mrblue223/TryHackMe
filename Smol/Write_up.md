@@ -9,10 +9,6 @@ Markdown
 # Table of Contents
 
 - [1. Reconnaissance and Initial Enumeration](#1-reconnaissance-and-initial-enumeration)
-  - [Nmap Scan](#nmap-scan)
-  - [/etc/hosts Modification](#etchosts-modification)
-  - [Gobuster Directory Enumeration](#gobuster-directory-enumeration)
-  - [WPScan Vulnerability Scan](#wpscan-vulnerability-scan)
 - [2. WordPress Vulnerabilities and Initial Access](#2-wordpress-vulnerabilities-and-initial-access)
   - [jsmol2wp Plugin Vulnerabilities](#jsmol2wp-plugin-vulnerabilities)
   - [XSS Vulnerability (Example Payload)](#xss-vulnerability-example-payload)
