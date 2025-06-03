@@ -53,8 +53,8 @@ The scan revealed two open ports:
 To properly resolve the domain www.smol.thm to the target's IP address, an entry was added to the /etc/hosts file on the attacking machine.
 
 subl /etc/hosts
-# Add the following line:
-# 10.10.231.99    www.smol.thm
+    Add the following line:
+    10.10.231.99    www.smol.thm
 
 Gobuster Directory Enumeration
 
