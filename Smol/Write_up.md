@@ -3,29 +3,15 @@ Smol.thm - A Detailed Penetration Test Write-up
 This document provides a detailed walkthrough of how the Smol.thm machine was compromised, from initial reconnaissance to gaining full root control. It outlines the methodology and techniques used during the penetration test and is intended for educational purposes.
 # Table of Contents
 
-## Table of Contents
+[This is the link text](#1-reconnaissance-and-initial-enumeration)
+[This is the link text](#2-wordpress-vulnerabilities-and-initial-access)
+[This is the link text](#xss-vulnerability-example-payload)
+[This is the link text](#srf-Vulnerability-(target-payload):)
+[This is the link text](#gaining-a-reverse-shell)
+[This is the link text](#privilege-escalation-to-diego)
+[This is the link text](#privilege-Escalation-to-root)
+[This is the link text](#conclusion)
 
-[This is the link text](#Reconnaissance and Initial Enumeration)
-
-2. WordPress Vulnerabilities and Initial Access
-
-    XSS Vulnerability (Example Payload):
-
-    SSRF Vulnerability (Target Payload):
-
-3. Gaining a Reverse Shell
-
-4. Privilege Escalation to diego
-
-    Cracking diego's Password
-
-5. Privilege Escalation to think
-
-6. Privilege Escalation to xavi
-
-7. Privilege Escalation to root
-
-8. Conclusion
 
 # 1-reconnaissance-and-initial-enumeration
 
