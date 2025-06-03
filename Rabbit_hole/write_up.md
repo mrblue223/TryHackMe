@@ -81,15 +81,15 @@ The ultimate payload combines the MID() technique for truncation bypass with the
 
 When this payload is injected as a username and the "Last logins" page is viewed (and refreshed periodically), it will display the admin's login query in fragmented pieces, such as:
 
-SELECT * from us
-ers where (usern
-ame= 'admin' and
- password=md5('*
-****************
-****************
-****************
-***************'
-) ) UNION ALL SE
+    SELECT * from us
+    ers where (usern
+    ame= 'admin' and
+    password=md5('*
+    ****************
+    ****************
+    ****************
+    ***************'
+    ) ) UNION ALL SE
 
 
 The asterisks (*) here represent the actual characters of the plaintext password that the admin bot is using before it's hashed by md5().
