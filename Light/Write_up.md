@@ -30,7 +30,7 @@ However, when we tried to use -- (e.g., ' UNION SELECT 1 -- ) to comment out the
 
 The application explicitly stated: "For strange reasons I can't explain, any input containing /*, --, or %0b is not allowed :)". This indicated a simple filter preventing common SQL comment syntaxes. To bypass this, we realized we would need to properly terminate our injected query with a single quote (') to close the original query, rather than relying on comments.
 
-![Alt text for the image](interesting error.png)
+![Alt text for the image](erro2.png)
 
 ## 4. Identifying the Database Management System (DBMS)
 
