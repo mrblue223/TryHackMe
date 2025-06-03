@@ -12,6 +12,9 @@ To establish a connection, we used netcat:
 nc 10.10.50.126 1337
 
 Upon successful connection, we were greeted by the login screen. We were provided with an initial username "smokey" and its corresponding password "vYQ5ngPpw8AdUmL".
+
+![Alt text for the image](password_for_smokey.png)
+
 ## 2. SQL Injection Discovery
 
 Our first step in identifying potential vulnerabilities was to test for SQL injection. A common technique is to inject a single quote (') into the username field to observe the application's response.
@@ -26,6 +29,9 @@ With the SQL injection vulnerability confirmed, our next attempt involved using 
 However, when we tried to use -- (e.g., ' UNION SELECT 1 -- ) to comment out the trailing part of the query, we encountered an interesting restriction:
 
 The application explicitly stated: "For strange reasons I can't explain, any input containing /*, --, or %0b is not allowed :)". This indicated a simple filter preventing common SQL comment syntaxes. To bypass this, we realized we would need to properly terminate our injected query with a single quote (') to close the original query, rather than relying on comments.
+
+![Alt text for the image](sql_divovery.png)
+
 ## 4. Identifying the Database Management System (DBMS)
 
 To craft more precise payloads, it was crucial to identify the specific DBMS in use. For SQLite databases, the sqlite_version() function is commonly used to retrieve its version.
@@ -37,6 +43,9 @@ We injected the following payload into the username field:
 This injection successfully returned the SQLite version:
 
 The output 3.31.1 confirmed that the database was SQLite.
+
+![Alt text for the image](Screenshot_2025-05-26_16-56-49.png)
+
 ## 5. Extracting Database Schema
 
 Knowing that the DBMS was SQLite, we could now leverage SQLite-specific features to extract the database schema. The sqlite_master table in SQLite contains metadata about all tables, indexes, views, and triggers. We used the group_concat(sql) function to retrieve the CREATE TABLE statements for all tables, which reveals their structure.
@@ -48,6 +57,9 @@ The payload used was:
 Injecting this into the username field revealed the full database structure:
 
 The output showed two tables: usertable and admintable. Both tables contained id, username, and password columns. Our objective was to find the credentials for the admin user, which were clearly located in the admintable.
+
+![Alt text for the image](db_dump.png)
+
 ## 6. Retrieving Admin Credentials and Flag
 
 The final step was to dump the username and password fields from the admintable. To make the output clear, we concatenated the username and password with a colon (:) using the || operator (SQLite's string concatenation operator) and group_concat to display all entries if there were multiple.
@@ -61,3 +73,5 @@ Upon executing this payload, we successfully retrieved the administrator's usern
 The output provided the following critical information: TryhackmeAdmin:mamZtAUhRseEy5bp6qJ7, flag:THM{SQliT3_InJ3cti0n_is_Simple_no?}
 
 This concluded the SQL injection attack, allowing us to successfully retrieve the administrator credentials and the hidden flag.
+
+![Alt text for the image](flag.png)
