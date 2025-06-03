@@ -1,3 +1,5 @@
+![Alt text for the image]()
+
 ## TryHackMe Crypto Failures Exploitation
 
 This repository contains two PHP scripts that demonstrate common cryptographic vulnerabilities encountered in web applications, specifically from the TryHackMe "Crypto Failures" room. These scripts are designed to help understand and exploit weaknesses related to cookie handling, hashing, and secret key management.
