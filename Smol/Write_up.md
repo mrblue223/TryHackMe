@@ -6,12 +6,6 @@ This document provides a detailed walkthrough of how the Smol.thm machine was co
 I will incorporate the provided content into the structured outline, ensuring proper Markdown formatting for display on GitHub, including correct headings and functional anchor links.
 Markdown
 
-# Smol.thm - A Detailed Penetration Test Write-up
-
-This document provides a detailed walkthrough of how the Smol.thm machine was compromised, from initial reconnaissance to gaining full root control. [cite: 1] It outlines the methodology and techniques used during the penetration test and is intended for educational purposes. [cite: 2]
-
----
-
 # Table of Contents
 
 - [1. Reconnaissance and Initial Enumeration](#1-reconnaissance-and-initial-enumeration)
