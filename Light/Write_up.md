@@ -44,7 +44,7 @@ This injection successfully returned the SQLite version:
 
 The output 3.31.1 confirmed that the database was SQLite.
 
-![Alt text for the image](Screenshot_2025-05-26_16-56-49.png)
+![Alt text for the image](sql_discovery.png)
 
 ## 5. Extracting Database Schema
 
