@@ -1,4 +1,4 @@
-![Alt text for the image](robot.png)
+<img src="robot.png" alt="Screenshot of the application" title="Application Screenshot" width="500">
 
 # TryHackMe "Robots" Machine Compromise Write-up
 
