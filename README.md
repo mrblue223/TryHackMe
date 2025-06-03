@@ -1,3 +1,5 @@
+![Alt text for the image](robot.png)
+
 ## TryHackMe CTF Write-ups
 
 This repository is a comprehensive collection of detailed write-ups and solutions for Capture The Flag (CTF) challenges from the TryHackMe platform.
