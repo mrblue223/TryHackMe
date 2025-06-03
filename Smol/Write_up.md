@@ -16,6 +16,48 @@ This document provides a detailed walkthrough of how the Smol.thm machine was co
 [7. Privilege Escalation to root](#7. Privilege Escalation to root)
 [8. Conclusion](#8. Conclusion)
 
+# 1. Reconnaissance and Initial Enumeration
+
+---
+
+## 2. WordPress Vulnerabilities and Initial Access
+
+- [XSS Vulnerability (Example Payload)](#xss-vulnerability-example-payload)
+- [SSRF Vulnerability (Target Payload)](#ssrf-vulnerability-target-payload)
+
+### XSS Vulnerability (Example Payload)
+
+[Your content for XSS here]
+
+### SSRF Vulnerability (Target Payload)
+
+[Your content for SSRF here]
+
+---
+
+## 3. Gaining a Reverse Shell
+
+---
+
+## 4. Privilege Escalation to Diego
+
+### Cracking Diego's Password
+
+---
+
+## 5. Privilege Escalation to Think
+
+---
+
+## 6. Privilege Escalation to Xavi
+
+---
+
+## 7. Privilege Escalation to Root
+
+---
+
+## 8. Conclusion
 
 # 1-reconnaissance-and-initial-enumeration
 
