@@ -70,33 +70,33 @@ gobuster dir -u http://www.smol.thm/ -w /usr/share/wordlists/dirb/common.txt
 
 Gobuster Output - WordPress Identification:
 
-===============================================================
-Gobuster v3.6
-by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
-===============================================================
-[+] Url:                     http://www.smol.thm/
-[+] Method:                  GET
-[+] Threads:                 10
-[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
-[+] Negative Status codes:   404
-[+] User Agent:              gobuster/3.6
-[+] Timeout:                 10s
-===============================================================
-Starting gobuster in directory enumeration mode
-===============================================================
-/.htaccess            (Status: 403) [Size: 277]
-/.hta                 (Status: 403) [Size: 277]
-/.htpasswd            (Status: 403) [Size: 277]
-/index.php            (Status: 301) [Size: 0] [--> http://www.smol.thm/]
-/server-status        (Status: 403) [Size: 277]
-/wp-admin             (Status: 301) [Size: 315] [--> http://www.smol.thm/wp-admin/]
-/wp-content           (Status: 301) [Size: 317] [--> http://www.smol.thm/wp-content/]
-/wp-includes          (Status: 301) [Size: 318] [--> http://www.smol.thm/wp-includes/]
-/xmlrpc.php           (Status: 405) [Size: 42]
-Progress: 4614 / 4615 (99.98%)
-===============================================================
-Finished
-===============================================================
+    ===============================================================
+    Gobuster v3.6
+    by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+    ===============================================================
+    [+] Url:                     http://www.smol.thm/
+    [+] Method:                  GET
+    [+] Threads:                 10
+    [+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+    [+] Negative Status codes:   404
+    [+] User Agent:              gobuster/3.6
+    [+] Timeout:                 10s
+    ===============================================================
+    Starting gobuster in directory enumeration mode
+    ===============================================================
+    /.htaccess            (Status: 403) [Size: 277]
+    /.hta                 (Status: 403) [Size: 277]
+    /.htpasswd            (Status: 403) [Size: 277]
+    /index.php            (Status: 301) [Size: 0] [--> http://www.smol.thm/]
+    /server-status        (Status: 403) [Size: 277]
+    /wp-admin             (Status: 301) [Size: 315] [--> http://www.smol.thm/wp-admin/]
+    /wp-content           (Status: 301) [Size: 317] [--> http://www.smol.thm/wp-content/]
+    /wp-includes          (Status: 301) [Size: 318] [--> http://www.smol.thm/wp-includes/]
+    /xmlrpc.php           (Status: 405) [Size: 42]
+    Progress: 4614 / 4615 (99.98%)
+    ===============================================================
+    Finished
+    ===============================================================
 
 The Gobuster scan indicated the presence of several WordPress-related directories (/wp-admin, /wp-content, /wp-includes), confirming that the website was running WordPress.
 WPScan Vulnerability Scan
