@@ -3,61 +3,50 @@ Smol.thm - A Detailed Penetration Test Write-up
 This document provides a detailed walkthrough of how the Smol.thm machine was compromised, from initial reconnaissance to gaining full root control. It outlines the methodology and techniques used during the penetration test and is intended for educational purposes.
 # Table of Contents
 
+I will incorporate the provided content into the structured outline, ensuring proper Markdown formatting for display on GitHub, including correct headings and functional anchor links.
+Markdown
 
-[1-reconnaissance-and-initial-enumeration](#1-reconnaissance-and-initial-enumeration)
-[2-wordpress-vulnerabilities-and-initial-access](#2-wordpress-vulnerabilities-and-initial-access)
-[XSS Vulnerability (Example Payload):](#XSS Vulnerability (Example Payload):)
-[SSRF Vulnerability (Target Payload):](#SSRF Vulnerability (Target Payload):)
-[3-gaining-a-reverse-shell](#3-gaining-a-reverse-shell)
-[4-privilege-escalation-to-diego](#4-privilege-escalation-to-diego)
-[Cracking diego's Password](#Cracking diego's Password)
-[5. Privilege Escalation to think](#5. Privilege Escalation to think)
-[6. Privilege Escalation to xavi](#6. Privilege Escalation to xavi)
-[7. Privilege Escalation to root](#7. Privilege Escalation to root)
-[8. Conclusion](#8. Conclusion)
+# Smol.thm - A Detailed Penetration Test Write-up
 
-# 1. Reconnaissance and Initial Enumeration
+This document provides a detailed walkthrough of how the Smol.thm machine was compromised, from initial reconnaissance to gaining full root control. [cite: 1] It outlines the methodology and techniques used during the penetration test and is intended for educational purposes. [cite: 2]
 
 ---
 
-## 2. WordPress Vulnerabilities and Initial Access
+# Table of Contents
 
-- [XSS Vulnerability (Example Payload)](#xss-vulnerability-example-payload)
-- [SSRF Vulnerability (Target Payload)](#ssrf-vulnerability-target-payload)
+- [1. Reconnaissance and Initial Enumeration](#1-reconnaissance-and-initial-enumeration)
+  - [Nmap Scan](#nmap-scan)
+  - [/etc/hosts Modification](#etchosts-modification)
+  - [Gobuster Directory Enumeration](#gobuster-directory-enumeration)
+  - [WPScan Vulnerability Scan](#wpscan-vulnerability-scan)
+- [2. WordPress Vulnerabilities and Initial Access](#2-wordpress-vulnerabilities-and-initial-access)
+  - [jsmol2wp Plugin Vulnerabilities](#jsmol2wp-plugin-vulnerabilities)
+  - [XSS Vulnerability (Example Payload)](#xss-vulnerability-example-payload)
+  - [SSRF Vulnerability (Target Payload)](#ssrf-vulnerability-target-payload)
+  - [Exploiting SSRF to Obtain Database Credentials](#exploiting-ssrf-to-obtain-database-credentials)
+  - [WordPress Administrator Login](#wordpress-administrator-login)
+  - [Discovering and Decoding the Backdoor](#discovering-and-decoding-the-backdoor)
+- [3. Gaining a Reverse Shell](#3-gaining-a-reverse-shell)
+  - [Crafting and Executing the Reverse Shell Payload](#crafting-and-executing-the-reverse-shell-payload)
+  - [Setting up the Netcat Listener](#setting-up-the-netcat-listener)
+  - [Spawning a Better Shell](#spawning-a-better-shell)
+- [4. Privilege Escalation to Diego](#4-privilege-escalation-to-diego)
+  - [MySQL Database Access](#mysql-database-access)
+  - [Dumping wp_users Table](#dumping-wp_users-table)
+  - [Cracking diego's Password](#cracking-diegos-password)
+  - [Switching User to diego and Finding user.txt](#switching-user-to-diego-and-finding-usertxt)
+- [5. Privilege Escalation to think](#5-privilege-escalation-to-think)
+  - [Locating think's SSH Private Key](#locating-thinks-ssh-private-key)
+  - [Using the SSH Key to Login as think](#using-the-ssh-key-to-login-as-think)
+- [6. Privilege Escalation to xavi](#6-privilege-escalation-to-xavi)
+  - [Discovering and Cracking wordpress.old.zip](#discovering-and-cracking-wordpressoldzip)
+  - [Extracting xavi's Credentials](#extracting-xavis-credentials)
+  - [Switching User to xavi](#switching-user-to-xavi)
+- [7. Privilege Escalation to root](#7-privilege-escalation-to-root)
+  - [Checking xavi's Sudo Privileges](#checking-xavis-sudo-privileges)
+  - [Gaining Root Access and Finding root.txt](#gaining-root-access-and-finding-roottxt)
+- [8. Conclusion](#8-conclusion)
 
-### XSS Vulnerability (Example Payload)
-
-[Your content for XSS here]
-
-### SSRF Vulnerability (Target Payload)
-
-[Your content for SSRF here]
-
----
-
-## 3. Gaining a Reverse Shell
-
----
-
-## 4. Privilege Escalation to Diego
-
-### Cracking Diego's Password
-
----
-
-## 5. Privilege Escalation to Think
-
----
-
-## 6. Privilege Escalation to Xavi
-
----
-
-## 7. Privilege Escalation to Root
-
----
-
-## 8. Conclusion
 
 # 1-reconnaissance-and-initial-enumeration
 
