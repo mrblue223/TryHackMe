@@ -3,21 +3,16 @@ Smol.thm - A Detailed Penetration Test Write-up
 This document provides a detailed walkthrough of how the Smol.thm machine was compromised, from initial reconnaissance to gaining full root control. It outlines the methodology and techniques used during the penetration test and is intended for educational purposes.
 Table of Contents
 
-    Reconnaissance and Initial Enumeration
+## Table of Contents
 
-    WordPress Vulnerabilities and Initial Access
-
-    Gaining a Reverse Shell
-
-    Privilege Escalation to diego
-
-    Privilege Escalation to think
-
-    Privilege Escalation to xavi
-
-    Privilege Escalation to root
-
-    Conclusion
+1.  [Reconnaissance and Initial Enumeration](#1-reconnaissance-and-initial-enumeration)
+2.  [WordPress Vulnerabilities and Initial Access](#2-wordpress-vulnerabilities-and-initial-access)
+3.  [Gaining a Reverse Shell](#3-gaining-a-reverse-shell)
+4.  [Privilege Escalation to `diego`](#4-privilege-escalation-to-diego)
+5.  [Privilege Escalation to `think`](#5-privilege-escalation-to-think)
+6.  [Privilege Escalation to `xavi`](#6-privilege-escalation-to-xavi)
+7.  [Privilege Escalation to `root`](#7-privilege-escalation-to-root)
+8.  [Conclusion](#8-conclusion)
 
 1. Reconnaissance and Initial Enumeration
 
