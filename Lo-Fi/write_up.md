@@ -4,7 +4,7 @@
 
 ![Alt text for the image](webpage.png)
 
-## 🪲 Look at the vulnrable part of the source code, for Local File Inclusion (LFI) 🪲
+## 🪲 Look at the vulnrable part of the source code, for Local File Inclusion (LFI) 
 
 ![Alt text for the image](vuln.png)
 
