@@ -85,7 +85,7 @@ We can see our encoded string:
 We can use the e.py script to decode the xor encoded cyphertext providing:
 
     1: The key lenght
-    2: the first 4 letters "THM{"
+    2: The first 4 letters "THM{"
     3: The last letter "}"
 
 This will decode the key The decoded cypher is the first flag:
