@@ -4,11 +4,11 @@
 
 ![Alt text for the image](webpage.png)
 
-## 🔎 Look at the vulnrable part of the source code, for Local File Inclusion (LFI)
+## 🪲 Look at the vulnrable part of the source code, for Local File Inclusion (LFI) 🪲
 
 ![Alt text for the image](vuln.png)
 
-Then we use path traversal to read the contents of the file.
+💡 Then we use path traversal to read the contents of the file.
     
 -  We can gather users from /etc/passwd
 
