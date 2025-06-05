@@ -87,8 +87,7 @@ We can use the e.py script to decode the xor encoded cyphertext providing:
 This will decode the key The decoded cypher is the first flag
 
 And the second flag is given by the server
-
-
+![Alt text for the image](second flag.png)
 
 
 
