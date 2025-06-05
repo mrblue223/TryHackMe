@@ -78,17 +78,21 @@ The key is generated randomly from ASCII letters and digits
     res = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
     key = str(res)
 
+We can see our encoded string:
+
+![Alt text for the image](ended_string.png)
+
 We can use the e.py script to decode the xor encoded cyphertext providing:
 
     1: The key lenght
     2: the first 4 letters "THM{"
     3: The last letter "}"
 
-This will decode the key The decoded cypher is the first flag
+This will decode the key The decoded cypher is the first flag:
 
 ![Alt text for the image](decoded_string.png)
 
-And the second flag is given by the server
+And the second flag is given by the server:
 
 ![Alt text for the image](second_flag.png)
 
