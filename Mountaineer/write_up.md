@@ -207,7 +207,7 @@ Then, John the Ripper was used with the generated wordlist (mount.txt) to crack 
 
     john keepass_hash --wordlist=mount.txt
 
-## 🔑 Password Found for kdbx File
+## 🔑 Password Found for kdbx File: Lhotse56185
 
 Once the password was recovered, kpcli was used to open and inspect the contents of the .kdbx file, revealing stored credentials.
 
