@@ -35,7 +35,7 @@ We also get a list of usernames
 
 Lets turn on BurpSuite and intercept some things, below we find this website is vulnarable to path traversal.
 
-We can read the /etc/passwd file
+We can read the /etc/passwd file with path traversal
 
 ![etc_change](path.png)
 
