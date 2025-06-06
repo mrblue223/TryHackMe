@@ -114,13 +114,15 @@ The first part shows you how to get the hash.
  ![Alt text for the image](root_hash.png)
 
 
-The second part, here we target the line with the command allowing us to execute that specifies the sudoedit command:
+The second part lets you change /etc/sudoers, here we target the line with the command allowing us to execute that specifies the sudoedit command:
     
     web ALL=(root) NOPASSWD: sudoedit /etc/nginx/sites-available/admin.cyprusbank.thm
 
 and replace it with the following:
 
     web ALL=(root) NOPASSWD: ALL  
+
+This makes it so any user can login as root with no passwords
 
 ![Alt text for the image](edit.png)
 
