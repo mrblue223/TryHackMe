@@ -90,7 +90,7 @@ We can use the e.py script to decode the xor encoded cyphertext providing:
 
 This will decode the key The decoded cypher is the first flag:
 
-![Alt text for the image](decoded_string.png)
+![Alt text for the image](decode_string.png)
 
 And the second flag is given by the server:
 
