@@ -49,7 +49,7 @@ We can set the customer's passwords here. What is noticeable is that the passwor
 
 We can know this website is vulnarable to SSTI because of this error
 
-![Alt text for the image](server.error.png)
+![Alt text for the image](server_error.png)
 
 We can find SSTI payloads here: 
   
