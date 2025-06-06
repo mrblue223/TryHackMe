@@ -16,7 +16,7 @@ TryHackMe | Whiterose
 
 ![Alt text for the image](fuzz.png)
 
-![Alt text for the image](fuzz1)
+![Alt text for the image](fuzz1.png)
 
 ## Change config file /etc/hosts
 
