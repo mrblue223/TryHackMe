@@ -109,7 +109,7 @@ To escalate our privileges to root, we attempt to edit the /etc/sudoers file.
 
 The first part shows you how to get the hash.
 
- ![Alt text for the image](hash...png)
+ ![Alt text for the image](hash..png)
 
  ![Alt text for the image](root_hash.png)
 
