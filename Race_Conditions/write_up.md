@@ -24,11 +24,12 @@ To demonstrate this vulnerability, we'll create a test file in the /home/race di
 
 To create this test file, you'll need to open another SSH session.
 
+![Alt text for the image](we_wait.png)
+
 ![Alt text for the image](1.png)
 
 Now in /home/walk we try to read the content of the test file. And we wait, dont press enter yet. In another ssh session follow the steps
 of the left ssh session and you will get the flag
-
 
 ![Alt text for the image](flag1.png)
 
@@ -53,4 +54,28 @@ An attacker can exploit this vulnerability by performing a precise file swap. Ri
 Despite its design as a more secure cat command with extra user context checks, this timing discrepancy completely undermines its security, making it susceptible to exploitation.
 Exploiting the Vulnerability
 
-To demonstrate this vulnerability, we'll create a small bash script named run.sh in SSH session 2.
+To demonstrate this vulnerability, we'll create a small bash script named run.sh in SSH session 2. 
+
+The run.sh script is designed to rapidly create, replace, and delete a test file. Its goal is to insert a symbolic link pointing to the /home/run/flag file within the precise, brief window that exists between the vulnerable program's security checks and its subsequent open() operation.
+
+If this timing attack is successful, the program will inadvertently read and output the contents of the flag file, completely bypassing its intended security measures.
+
+To execute this exploit:
+
+    In SSH session 2, run your script:
+    Bash
+
+bash run.sh
+
+Simultaneously (or immediately after starting the script), in SSH session 1, execute the vulnerable command:
+Bash
+
+    ./cat /home/race/test
+
+This synchronized execution aims to reveal the flag. (NOTE: you might need the spam the enter button in session two to make it work)
+
+![Alt text for the image](flag2.png)
+
+## Challenge 3
+
+This was bit tricky challenge, and it needed a little bit of scripting knowledge to solve it.
