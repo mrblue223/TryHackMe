@@ -36,3 +36,21 @@ of the left ssh session and you will get the flag
 
 Next, we'll navigate to the /home/run directory and analyze the cat2.c code.
 
+## Understanding the Race Condition in cat2.c
+
+The cat2.c program, intended as a more secure version of cat, unfortunately harbors a race condition vulnerability. This flaw stems from a critical time gap between when the program performs a security context check and when it actually opens the file for reading.
+
+Here's how it breaks down:
+
+    Security Check: The program first verifies if the user has the necessary permissions to access the file.
+    Vulnerable Window: Critically, there's a deliberate half-second pause (usleep(500)) immediately after this check. This artificial delay creates a window of opportunity for an attacker.
+    File Open: After the pause, the program proceeds to open the file.
+
+How the Exploit Works
+
+An attacker can exploit this vulnerability by performing a precise file swap. Right after the program completes its security check, but just before the open() operation executes, the attacker can replace the legitimate file with a restricted file or a symbolic link to a restricted file. Because the security check has already passed, the program will then unknowingly open and process the unauthorized file.
+
+Despite its design as a more secure cat command with extra user context checks, this timing discrepancy completely undermines its security, making it susceptible to exploitation.
+Exploiting the Vulnerability
+
+To demonstrate this vulnerability, we'll create a small bash script named run.sh in SSH session 2.
