@@ -79,3 +79,27 @@ This synchronized execution aims to reveal the flag. (NOTE: you might need the s
 ## Challenge 3
 
 This was bit tricky challenge, and it needed a little bit of scripting knowledge to solve it.
+
+This script sets up a networked banking system, running a multithreaded server on port 1337. It's built to let clients deposit money, withdraw it, or even buy a special "flag." Basically, it handles each client connection in its own dedicated thread.
+The Sneaky Flaw: A Race Condition
+
+Here's where things get tricky: The core problem in this banking system is a classic race condition revolving around the shared money variable. Think of it like multiple people trying to update the same bank balance at the exact same time. When many threads can access and change this money variable concurrently, its value can get messed up because of how operations are timed.
+
+Specifically, if someone times their "withdraw" and "purchase flag" commands just right, they can actually buy the flag even if they don't have enough funds! The system might approve the flag purchase before it fully processes a simultaneous withdrawal. That's a huge security hole.
+My Exploit: A Python Attack Script
+
+To show just how vulnerable this is, I've put together a Python script. It's designed to unleash multiple threads that hammer the server simultaneously with "deposit," "withdraw," and "purchase flag" commands. The whole idea is to trigger that race condition, letting us snatch the "flag" without the necessary balance.
+
+The script continuously runs the deposit and withdraw functions, but the purchase_flag function has a slight delay. This delay is key; it helps create the perfect timing for the exploit to work.
+
+Oh, and to keep things clean and stop bombarding the server endlessly, I've added a neat check in the purchase_flag function. Once we snag the flag, the script knows to stop sending more requests.
+
+We now execute the ./bankingsystem program in SSH session 1 and then run our exploit in SSH session 2. (NOTE: dont forget to make your exploit.py executable with "chmod +x exploit.py")
+
+![Alt text for the image](bankking.png)
+
+![Alt text for the image](bank1.png)
+
+The bankingsystem program can be seen receiving connection, while our exploit reads out the flag.
+
+![Alt text for the image](flag3.png)
