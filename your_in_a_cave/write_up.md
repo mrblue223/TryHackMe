@@ -1,4 +1,4 @@
-Penetration Test Write-Up: Cave Machine
+## Penetration Test Write-Up: Cave Machine
 
 This document details the steps taken during a penetration test of the target machine at 10.10.216.57 (later 10.10.202.200 for some interactions). The write-up covers initial reconnaissance, web enumeration, exploitation of a custom service, Java deserialization leading to remote code execution, privilege escalation, and flag discovery.
 
