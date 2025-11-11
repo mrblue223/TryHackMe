@@ -1,0 +1,109 @@
+😇 TryHackMe: Binary Heaven - angel_B Password Crack
+
+This document details the reverse engineering process used to find the correct 11-character password for the Go binary angel_B using GDB.
+
+1. Initial Analysis: Identifying the Go Binary
+
+The binary immediately presented a challenge: the standard entry point main was not found.
+
+(gdb) disas main
+No symbol "main" in current context.
+
+
+Listing all available functions (info functions) revealed that the binary was compiled from Go (go-1.15), indicated by numerous Go standard library paths and the presence of the true entry function: main.main.
+
+File /mnt/c/Users/User/Downloads/binary_heaven/password.go:
+    void main.main(void);
+
+
+2. Disassembling the Core Logic (main.main)
+
+We disassembled the entry function to find the password validation logic.
+
+(gdb) disas main.main
+
+
+The disassembled code contains the entire user interaction and validation routine. The critical sections involve reading input using a function like fmt.Fscanln (around <main.main+303>) and performing a length check followed by a string comparison.
+
+3. Step-by-Step Validation Analysis
+
+A. Length Check
+
+After reading the user's input string, the program checks its length, which is stored in register RCX (the second 8 bytes of a Go string structure).
+
+Address
+
+Assembly
+
+Analysis
+
+0x4a53f9 <+313>
+
+mov 0x8(%rax),%rcx
+
+Load string length into RCX.
+
+0x4a5400 <+320>
+
+cmp $0xb,%rcx
+
+Compare length with 0xb (decimal 11).
+
+0x4a5404 <+324>
+
+je 0x4a54a1
+
+If length is 11, jump to validation.
+
+Conclusion 1: The password must be exactly 11 characters long.
+
+If the length check fails, the program jumps to the failure message at 0x4a540a.
+
+B. Memory Comparison
+
+If the length is correct, the program proceeds to 0x4a54a1 where it prepares to call the built-in Go string comparison function, runtime.memequal.
+
+Address
+
+Assembly
+
+Analysis
+
+0x4a54a5 <+485>
+
+lea 0x2585f(%rip),%rax # 0x4cad0b
+
+Load the address of the target string (0x4cad0b) into RAX.
+
+0x4a54b6 <+502>
+
+call 0x4022e0 <runtime.memequal>
+
+Compare the user input against the static string at 0x4cad0b.
+
+Conclusion 2: The correct 11-character password is stored in the data segment at memory address 0x4cad0b.
+
+4. Extracting the Password
+
+The final step is to inspect the memory at the identified address (0x4cad0b) using the x/s (examine memory, treat as string) GDB command.
+
+(gdb) x/s 0x4cad0b
+0x4cad0b: "GOg0esGrrr!IdeographicMedefaidrinNandinagariNew_Tai_LueOld_Persian..."
+
+
+Reading the first 11 characters from the string data yields the solution:
+
+$$\text{Password} = \texttt{GOg0esGrrr!}$$
+
+5. Final Verification
+
+Testing the password against the running binary:
+
+$ ./angel_B
+Enter the password:
+GOg0esGrrr!
+
+Correct!
+
+
+Final Answer: GOg0esGrrr!
