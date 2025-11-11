@@ -30,3 +30,9 @@ We started with a full port scan to identify open services.
 ```bash
     export RHOSTS=10.10.124.63
     rustscan --ulimit 5000 -t 2000 --range=1-65535 $RHOSTS -- -sC -sV -oN rustscan/rustscan.txt
+
+   PORT   STATE SERVICE REASON         VERSION
+   22/tcp open  ssh     syn-ack ttl 63 OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 (Ubuntu Linux; protocol 2.0)
+   | ssh-hostkey: 
+   # ... (Host keys omitted for brevity)
+   Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
