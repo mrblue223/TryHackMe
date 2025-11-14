@@ -469,9 +469,9 @@ nc -lvnp 4545 > network.pkt
     interface FastEthernet0/1
      --More-- 
 
-### Privilege escelation
+## Privilege escelation
 
-## we can login via ssh and retrieve the first flag
+### we can login via ssh and retrieve the first flag
 ──(mrblue㉿kali)-[~/CTF/THM/Motunui]
 └─$ ssh moana@api.motunui.thm
 
@@ -498,9 +498,9 @@ nc -lvnp 4545 > network.pkt
     [Install]
     WantedBy=multi-user.target
 
-### Privilege escelation
+## Privilege escelation
 
-## We find in /etc/ssl.txt, with this we can fully decrypt the traffic of the wireshark pcap file we had
+### We find in /etc/ssl.txt, with this we can fully decrypt the traffic of the wireshark pcap file we had
 
 tshark -r ticket_6746.pcapng -o "tls.keylog_file:ssl.txt" -Y "http || tls" -V > decrypted_traffic.txt
 
