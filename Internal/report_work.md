@@ -7,6 +7,27 @@
 
 ---
 
+## 0. Pre engagement
+
+Scope of Work
+
+The client requests that an engineer conducts an external, web app, and internal assessment of the provided virtual environment. The client has asked that minimal information be provided about the assessment, wanting the engagement conducted from the eyes of a malicious actor (black box penetration test).  The client has asked that you secure two flags (no location provided) as proof of exploitation:
+
+    User.txt
+    Root.txt
+
+Additionally, the client has provided the following scope allowances:
+
+    Ensure that you modify your hosts file to reflect internal.thm
+    Any tools or techniques are permitted in this engagement
+    Locate and note all vulnerabilities found
+    Submit the flags discovered to the dashboard
+    Only the IP address assigned to your machine is in scope
+
+(Roleplay off)
+
+I encourage you to approach this challenge as an actual penetration test. Consider writing a report, to include an executive summary, vulnerability and exploitation assessment, and remediation suggestions, as this will benefit you in preparation for the eLearnsecurity eCPPT or career as a penetration tester in the field.
+
 ## 1. Executive Summary
 
 The security assessment of the target environment resulted in a **full root system compromise**. The overall risk rating is **CRITICAL**. The attack chain was enabled by predictable **weak credentials** and the catastrophic failure to protect the **root password**, which was stored in cleartext on the filesystem.
