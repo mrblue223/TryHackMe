@@ -70,11 +70,9 @@ This section is essential for allowing Burp Suite to correctly intercept HTTPS/S
   
 ## Part 4: Remember
 ### Remember the following:
+- When the proxy configuration is active, and the intercept is switched on in Burp Suite, your browser will hang whenever you make a request.
+- Be cautious not to leave the intercept switched on unintentionally, as it can prevent your browser from making any requests.
+- Right-clicking on a request in Burp Suite allows you to perform various actions, such as forwarding, dropping, sending to other tools, or selecting options from the right-click menu.
 
-    When the proxy configuration is active, and the intercept is switched on in Burp Suite, your browser will hang whenever you make a request.
-    Be cautious not to leave the intercept switched on unintentionally, as it can prevent your browser from making any requests.
-    Right-clicking on a request in Burp Suite allows you to perform various actions, such as forwarding, dropping, sending to other tools, or selecting options from the right-click menu.
-
-
-    * If successful, the request will be **held** in the Burp Suite **Intercept** tab, and the browser will be waiting for a response without displaying any SSL/Certificate warnings.
-    * Click **Forward** in Burp Suite to allow the request to continue.
+-  If successful, the request will be **held** in the Burp Suite **Intercept** tab, and the browser will be waiting for a response without displaying any SSL/Certificate warnings.
+-  lick **Forward** in Burp Suite to allow the request to continue.
