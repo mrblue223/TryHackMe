@@ -1,4 +1,4 @@
-# Penetration Test Write-up: Buggle - THM
+# Write-up: Daily Bugle - THM
 
 This document details the successful exploitation, privilege escalation, and flag retrieval for the target machine, `dailybugle` (10.81.163.107).
 
