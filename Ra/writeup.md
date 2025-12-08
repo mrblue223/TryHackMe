@@ -62,13 +62,9 @@ Result: Password for lilyle was reset to: ChangeMe#1234
 
 ![Alt Text](reset_password_page1.png)
 
-![Alt Text](inputing_name_and _security_question.png)
+## Add the username and pets name found in source code to change password.
 
 ![Alt Text](Password_change.png )
-
-![Alt Text](image-url)
-
-![Alt Text](image-url)
 
 ### Using smbmap to enumerate shares:
 bash
