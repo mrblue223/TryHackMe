@@ -1,0 +1,330 @@
+Authentication Id : 0 ; 352366 (00000000:0005606e)
+Session           : Interactive from 1
+User Name         : buse
+Domain            : WINDCORP
+Logon Server      : FIRE
+Logon Time        : 12/2/2025 1:02:03 PM
+SID               : S-1-5-21-555431066-3599073733-176599750-5777
+	msv :	
+	 [00000003] Primary
+	 * Username : buse
+	 * Domain   : WINDCORP
+	 * NTLM     : 666676658545ad3622b6bc7068cd2307
+	 * SHA1     : e3816f8ec738a4881ef99237b11941b046eee2ad
+	 * DPAPI    : 8f69b23d0c945373006a23372055ec4d
+	tspkg :	
+	wdigest :	
+	 * Username : buse
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : buse
+	 * Domain   : WINDCORP.THM
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 68318 (00000000:00010ade)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:42 PM
+SID               : S-1-5-90-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 4c6a6760ee110765e1e315785ec9b10a
+	 * SHA1     : cf0fcaaf77338d99afd14c14098f9259ae5041bf
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : FIRE$
+	 * Domain   : windcorp.thm
+	 * Password : fa 30 6a 9f 77 f6 02 af d5 9f b3 eb 2c ab 3f ed a3 47 1a cb 3a d6 67 61 e8 d0 ea 88 64 2f 4d af d0 d2 7e d3 5d e8 c5 93 83 a4 e6 09 c4 55 5d 9e 3f d5 66 0a f0 8f a7 1b 6d 9b 42 1e fc cc 74 1c b8 ab ab c7 9d ee 6d 5a 4a f5 13 3d 93 7b 53 6d 71 90 c4 c7 9b 4e 1c 45 53 2a f7 52 10 2a 95 5a d5 f4 98 eb 65 66 7c 18 e5 89 05 f0 ee 8a 17 f6 73 3a 58 df b3 54 68 6f e9 cb 68 c6 3e b6 5a 69 06 42 a7 d9 63 ca 7a d4 ed 1f 77 d8 f5 e5 93 b2 39 2d 76 29 60 63 9b 06 91 b7 da 86 74 1f cb 84 4f 4e 4b 14 6b 26 a6 4e 2c b2 8f cd ff 49 76 55 a0 1a 10 f6 10 14 11 cd 16 c2 8f 98 d9 08 1a 5b 10 51 b5 36 10 b6 41 fd fd fc 42 43 41 24 e5 50 fa aa f1 cb 2c 59 16 31 d0 b7 fc d6 63 e1 06 12 48 15 83 6c de 7c fc 27 2e 71 17 91 cc c3 d8 f8 
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 996 (00000000:000003e4)
+Session           : Service from 0
+User Name         : FIRE$
+Domain            : WINDCORP
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:38 PM
+SID               : S-1-5-20
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 4c6a6760ee110765e1e315785ec9b10a
+	 * SHA1     : cf0fcaaf77338d99afd14c14098f9259ae5041bf
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : fire$
+	 * Domain   : WINDCORP.THM
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 38326 (00000000:000095b6)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:36 PM
+SID               : S-1-5-96-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 686855b132c1110a4c2dc31fbe3fb1db
+	 * SHA1     : c3a536394679c790ff29732c392cc1fce7dd28b1
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : FIRE$
+	 * Domain   : windcorp.thm
+	 * Password : 70 c9 0e 65 be 48 8f 9a ca cf 59 e1 97 94 f3 2f 89 e4 c3 a4 c9 5c 81 2d 1f e3 a7 45 17 bd 62 d7 a0 ec 5a 41 66 81 d7 94 b3 2e 1c 96 8e b0 df d8 3d 97 ce d3 52 37 2c e3 b4 91 62 a1 5e 59 5a 86 69 7d 7a f5 26 99 e2 be a2 b6 0c 21 cf 69 0a f9 9d 8c 31 9f 17 18 0b 6c 7f 27 bc 67 d0 e0 ed 36 62 cd 0b d7 c0 52 3c 84 b5 6a e3 12 bc ee 52 bb c4 99 6f 96 a5 5b a7 ba 26 36 9d d2 1f 0e dd 8f 6c f5 a8 65 e5 03 bf 17 70 e1 a2 a3 56 5a 3a ad b5 52 83 c7 72 4e 62 a3 d0 37 b3 2f 27 47 7f e6 b4 88 bc 85 c2 03 36 91 9a 90 8a 15 e8 f0 c6 3d 7e 6f ec cc 41 c5 78 2a f9 d6 b2 9c 4d cc 25 ea 07 30 4a 58 5e 9e 73 e1 c8 5b 63 df a5 49 92 36 11 1f fc 22 be 37 64 0a be c6 83 23 44 1c fd a6 c7 9b 75 e8 7d 6a 90 e1 68 76 c6 a9 4f b3 b1 32 
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 38300 (00000000:0000959c)
+Session           : Interactive from 1
+User Name         : UMFD-1
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:36 PM
+SID               : S-1-5-96-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 4c6a6760ee110765e1e315785ec9b10a
+	 * SHA1     : cf0fcaaf77338d99afd14c14098f9259ae5041bf
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : FIRE$
+	 * Domain   : windcorp.thm
+	 * Password : fa 30 6a 9f 77 f6 02 af d5 9f b3 eb 2c ab 3f ed a3 47 1a cb 3a d6 67 61 e8 d0 ea 88 64 2f 4d af d0 d2 7e d3 5d e8 c5 93 83 a4 e6 09 c4 55 5d 9e 3f d5 66 0a f0 8f a7 1b 6d 9b 42 1e fc cc 74 1c b8 ab ab c7 9d ee 6d 5a 4a f5 13 3d 93 7b 53 6d 71 90 c4 c7 9b 4e 1c 45 53 2a f7 52 10 2a 95 5a d5 f4 98 eb 65 66 7c 18 e5 89 05 f0 ee 8a 17 f6 73 3a 58 df b3 54 68 6f e9 cb 68 c6 3e b6 5a 69 06 42 a7 d9 63 ca 7a d4 ed 1f 77 d8 f5 e5 93 b2 39 2d 76 29 60 63 9b 06 91 b7 da 86 74 1f cb 84 4f 4e 4b 14 6b 26 a6 4e 2c b2 8f cd ff 49 76 55 a0 1a 10 f6 10 14 11 cd 16 c2 8f 98 d9 08 1a 5b 10 51 b5 36 10 b6 41 fd fd fc 42 43 41 24 e5 50 fa aa f1 cb 2c 59 16 31 d0 b7 fc d6 63 e1 06 12 48 15 83 6c de 7c fc 27 2e 71 17 91 cc c3 d8 f8 
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 38109 (00000000:000094dd)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:36 PM
+SID               : S-1-5-96-0-0
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 4c6a6760ee110765e1e315785ec9b10a
+	 * SHA1     : cf0fcaaf77338d99afd14c14098f9259ae5041bf
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : FIRE$
+	 * Domain   : windcorp.thm
+	 * Password : fa 30 6a 9f 77 f6 02 af d5 9f b3 eb 2c ab 3f ed a3 47 1a cb 3a d6 67 61 e8 d0 ea 88 64 2f 4d af d0 d2 7e d3 5d e8 c5 93 83 a4 e6 09 c4 55 5d 9e 3f d5 66 0a f0 8f a7 1b 6d 9b 42 1e fc cc 74 1c b8 ab ab c7 9d ee 6d 5a 4a f5 13 3d 93 7b 53 6d 71 90 c4 c7 9b 4e 1c 45 53 2a f7 52 10 2a 95 5a d5 f4 98 eb 65 66 7c 18 e5 89 05 f0 ee 8a 17 f6 73 3a 58 df b3 54 68 6f e9 cb 68 c6 3e b6 5a 69 06 42 a7 d9 63 ca 7a d4 ed 1f 77 d8 f5 e5 93 b2 39 2d 76 29 60 63 9b 06 91 b7 da 86 74 1f cb 84 4f 4e 4b 14 6b 26 a6 4e 2c b2 8f cd ff 49 76 55 a0 1a 10 f6 10 14 11 cd 16 c2 8f 98 d9 08 1a 5b 10 51 b5 36 10 b6 41 fd fd fc 42 43 41 24 e5 50 fa aa f1 cb 2c 59 16 31 d0 b7 fc d6 63 e1 06 12 48 15 83 6c de 7c fc 27 2e 71 17 91 cc c3 d8 f8 
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 1410699 (00000000:0015868b)
+Session           : Batch from 0
+User Name         : sadswan869
+Domain            : WINDCORP
+Logon Server      : FIRE
+Logon Time        : 12/2/2025 1:03:57 PM
+SID               : S-1-5-21-555431066-3599073733-176599750-5778
+	msv :	
+	 [00000003] Primary
+	 * Username : sadswan869
+	 * Domain   : WINDCORP
+	 * NTLM     : 9377fe2bf42fac9d506374734b1e1a7f
+	 * SHA1     : 756ac9ef536a2811575de71ad2bb2086bb9f76b7
+	 * DPAPI    : 7f2626c7b0fbbfc97472f55b45b1863d
+	tspkg :	
+	wdigest :	
+	 * Username : sadswan869
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : sadswan869
+	 * Domain   : WINDCORP.THM
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 352403 (00000000:00056093)
+Session           : Interactive from 1
+User Name         : buse
+Domain            : WINDCORP
+Logon Server      : FIRE
+Logon Time        : 12/2/2025 1:02:03 PM
+SID               : S-1-5-21-555431066-3599073733-176599750-5777
+	msv :	
+	 [00000003] Primary
+	 * Username : buse
+	 * Domain   : WINDCORP
+	 * NTLM     : 666676658545ad3622b6bc7068cd2307
+	 * SHA1     : e3816f8ec738a4881ef99237b11941b046eee2ad
+	 * DPAPI    : 8f69b23d0c945373006a23372055ec4d
+	tspkg :	
+	wdigest :	
+	 * Username : buse
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : buse
+	 * Domain   : WINDCORP.THM
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 995 (00000000:000003e3)
+Session           : Service from 0
+User Name         : IUSR
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:57 PM
+SID               : S-1-5-17
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 997 (00000000:000003e5)
+Session           : Service from 0
+User Name         : LOCAL SERVICE
+Domain            : NT AUTHORITY
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:42 PM
+SID               : S-1-5-19
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	kerberos :	
+	 * Username : (null)
+	 * Domain   : (null)
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 68337 (00000000:00010af1)
+Session           : Interactive from 1
+User Name         : DWM-1
+Domain            : Window Manager
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:42 PM
+SID               : S-1-5-90-0-1
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 686855b132c1110a4c2dc31fbe3fb1db
+	 * SHA1     : c3a536394679c790ff29732c392cc1fce7dd28b1
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : FIRE$
+	 * Domain   : windcorp.thm
+	 * Password : 70 c9 0e 65 be 48 8f 9a ca cf 59 e1 97 94 f3 2f 89 e4 c3 a4 c9 5c 81 2d 1f e3 a7 45 17 bd 62 d7 a0 ec 5a 41 66 81 d7 94 b3 2e 1c 96 8e b0 df d8 3d 97 ce d3 52 37 2c e3 b4 91 62 a1 5e 59 5a 86 69 7d 7a f5 26 99 e2 be a2 b6 0c 21 cf 69 0a f9 9d 8c 31 9f 17 18 0b 6c 7f 27 bc 67 d0 e0 ed 36 62 cd 0b d7 c0 52 3c 84 b5 6a e3 12 bc ee 52 bb c4 99 6f 96 a5 5b a7 ba 26 36 9d d2 1f 0e dd 8f 6c f5 a8 65 e5 03 bf 17 70 e1 a2 a3 56 5a 3a ad b5 52 83 c7 72 4e 62 a3 d0 37 b3 2f 27 47 7f e6 b4 88 bc 85 c2 03 36 91 9a 90 8a 15 e8 f0 c6 3d 7e 6f ec cc 41 c5 78 2a f9 d6 b2 9c 4d cc 25 ea 07 30 4a 58 5e 9e 73 e1 c8 5b 63 df a5 49 92 36 11 1f fc 22 be 37 64 0a be c6 83 23 44 1c fd a6 c7 9b 75 e8 7d 6a 90 e1 68 76 c6 a9 4f b3 b1 32 
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 38371 (00000000:000095e3)
+Session           : Interactive from 0
+User Name         : UMFD-0
+Domain            : Font Driver Host
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:36 PM
+SID               : S-1-5-96-0-0
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 686855b132c1110a4c2dc31fbe3fb1db
+	 * SHA1     : c3a536394679c790ff29732c392cc1fce7dd28b1
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : FIRE$
+	 * Domain   : windcorp.thm
+	 * Password : 70 c9 0e 65 be 48 8f 9a ca cf 59 e1 97 94 f3 2f 89 e4 c3 a4 c9 5c 81 2d 1f e3 a7 45 17 bd 62 d7 a0 ec 5a 41 66 81 d7 94 b3 2e 1c 96 8e b0 df d8 3d 97 ce d3 52 37 2c e3 b4 91 62 a1 5e 59 5a 86 69 7d 7a f5 26 99 e2 be a2 b6 0c 21 cf 69 0a f9 9d 8c 31 9f 17 18 0b 6c 7f 27 bc 67 d0 e0 ed 36 62 cd 0b d7 c0 52 3c 84 b5 6a e3 12 bc ee 52 bb c4 99 6f 96 a5 5b a7 ba 26 36 9d d2 1f 0e dd 8f 6c f5 a8 65 e5 03 bf 17 70 e1 a2 a3 56 5a 3a ad b5 52 83 c7 72 4e 62 a3 d0 37 b3 2f 27 47 7f e6 b4 88 bc 85 c2 03 36 91 9a 90 8a 15 e8 f0 c6 3d 7e 6f ec cc 41 c5 78 2a f9 d6 b2 9c 4d cc 25 ea 07 30 4a 58 5e 9e 73 e1 c8 5b 63 df a5 49 92 36 11 1f fc 22 be 37 64 0a be c6 83 23 44 1c fd a6 c7 9b 75 e8 7d 6a 90 e1 68 76 c6 a9 4f b3 b1 32 
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 35550 (00000000:00008ade)
+Session           : UndefinedLogonType from 0
+User Name         : (null)
+Domain            : (null)
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:17 PM
+SID               : 
+	msv :	
+	 [00000003] Primary
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * NTLM     : 4c6a6760ee110765e1e315785ec9b10a
+	 * SHA1     : cf0fcaaf77338d99afd14c14098f9259ae5041bf
+	tspkg :	
+	wdigest :	
+	kerberos :	
+	ssp :	
+	credman :	
+
+Authentication Id : 0 ; 999 (00000000:000003e7)
+Session           : UndefinedLogonType from 0
+User Name         : FIRE$
+Domain            : WINDCORP
+Logon Server      : (null)
+Logon Time        : 12/2/2025 1:00:15 PM
+SID               : S-1-5-18
+	msv :	
+	tspkg :	
+	wdigest :	
+	 * Username : FIRE$
+	 * Domain   : WINDCORP
+	 * Password : (null)
+	kerberos :	
+	 * Username : fire$
+	 * Domain   : WINDCORP.THM
+	 * Password : (null)
+	ssp :	
+	credman :	
+
+
