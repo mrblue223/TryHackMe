@@ -56,7 +56,7 @@ Answer Found: Sparky
 Result: Password for lilyle was reset to: ChangeMe#1234
 2.2 SMB Enumeration with Compromised Credentials
 
-![Alt Text](Ra/email_list.png)
+![Alt Text](email_list.png)
 
 ![Alt Text](image-url)
 
