@@ -62,7 +62,7 @@ Result: Password for lilyle was reset to: ChangeMe#1234
 
 ![Alt Text](reset_password_page1.png)
 
-![Alt Text](inputing_name_and_security_question.png)
+![Alt Text](inputing_name_and _security_question.png)
 
 ![Alt Text](Password_change.png )
 
