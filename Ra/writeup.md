@@ -58,13 +58,13 @@ Result: Password for lilyle was reset to: ChangeMe#1234
 
 ![Alt Text](email_list.png)
 
-![Alt Text](image-url)
+![Alt Text](Security_question_information.png)
 
-![Alt Text](image-url)
+![Alt Text](reset_password_page1.png)
 
-![Alt Text](image-url)
+![Alt Text](inputing_name_and_security_question.png)
 
-![Alt Text](image-url)
+![Alt Text](Password_change.png )
 
 ![Alt Text](image-url)
 
