@@ -4,6 +4,9 @@ This document details the successful exploitation, privilege escalation, and fla
 
 ---
 
+Some scripts needed:
+https://github.com/BaptisteContreras/CVE-2017-8917-Joomla
+
 ## 🔍 Phase 1: Enumeration and Initial Access
 
 ### 1.1 Service Discovery (Nmap)
