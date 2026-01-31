@@ -112,6 +112,8 @@ text
 
 Success! DC should now have the empty string as its machine password.
 
+![Alt Text](netlogon.png) 
+
 ### Step 2: Dump Domain Hashes with secretsdump.py
 bash
 
@@ -146,6 +148,8 @@ Phase 4: Post-Exploitation and Flag Capture
     cmd
     type C:\Users\Administrator\Desktop\Flag3.txt
     Flag 3: THM{ba3a2bff2e535b514ad760c283890faae54ac2ef}
+
+![Alt Text](letmein.png) 
 
 # 4.3 Additional Artifacts Found
 
