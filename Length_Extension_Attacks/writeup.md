@@ -48,6 +48,8 @@ Payload Details:
 
     File Parameter: %31%2e%70%6e%67%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%68%2f%2e%2e%2f%34%2e%70%6e%67
 ```
+![Alt text for the image](./photos/practical1.jpeg)
+
 Flag: THM{L3n6th_3Xt33ns10nssss}
 
 ## 5. Lab 2: Modifying Signed Cookies
@@ -72,5 +74,7 @@ Modified Cookie Values:
 
     auth (Data): %75%73%65%72%6e%61%6d%65%3d%75%73%65%72%3b%72%6f%6c%65%3d%30%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%e0%3b%72%6f%6c%65%3d%31
 ```
+
+![Alt text for the image](./photos/practical2.png)
 
 Flag: THM{l3n6th_2_4dM1n}
